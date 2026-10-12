@@ -10,7 +10,6 @@ import {
 } from '../../../features/register'
 
 
-
 const Register = () => {
     const { name, email, password } = useSelector(
         (state: RootState) => state.register
