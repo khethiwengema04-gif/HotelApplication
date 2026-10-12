@@ -29,7 +29,7 @@ export const Landing = () => {
                 </div>
             </div>
 
-            <h1>Welcome to the Hotel site</h1>
+            <h1>Welcome to our NESTOVA Hotel site</h1>
             <p>Thank you for believing in us!!!</p>
 
             {/* <button className={styles.startBtn} onClick={handleStart}>
