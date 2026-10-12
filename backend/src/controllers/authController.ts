@@ -22,3 +22,19 @@ export const register = async (req: Request, res: Response) => {
         res.status(500).json({ message: "Error registering the user" });
     }
 };
+
+export const login = async (req: Request, res: Response) => {
+    const { email, password } = req.body;
+    if (!email || !password) {
+        return res.status(400).json({ message: "Email and password are required" });
+    }
+
+    try {
+        const user = await authService.findUserByEmail(email);
+        res.status(200).json({ message: "Login Successful" })
+    } catch (error) {
+        res.status(401).json({ message: "Invalid Password" })
+
+    }
+};
+
