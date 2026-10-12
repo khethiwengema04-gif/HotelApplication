@@ -1,4 +1,4 @@
-import styles from './Registering.module.css';
+import styles from './register.module.css'
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../../store';
@@ -7,11 +7,12 @@ import {
     setName,
     setEmail,
     setpassword,
+    setRole
 } from '../../../features/register'
 
 
 const Register = () => {
-    const { name, email, password } = useSelector(
+    const { name, email, password, role } = useSelector(
         (state: RootState) => state.register
     );
     const navigate = useNavigate();
@@ -22,7 +23,7 @@ const Register = () => {
     const dispatch = useDispatch()
     const handleFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        const registerUser = await dispatch(registerThunk({ name, email, password }) as any)
+        const registerUser = await dispatch(registerThunk({ name, email, password, role }) as any)
         if (registerThunk.fulfilled.match(registerUser)) {
             alert('succesfully registered')
             navigate('/home')
@@ -52,6 +53,14 @@ const Register = () => {
                     <div className="password">
                         <p>Password</p>
                         <input type="text" value={password} onChange={(e) => dispatch(setpassword(e.target.value))} />
+                    </div>
+
+                    <div className="role">
+                        <p>Role</p>
+                        <select value={role} onChange={(e) => dispatch(setRole(e.target.value as 'Admin' | 'User'))}>
+                            <option value="User">User</option>
+                            <option value="Admin">Admin</option>
+                        </select>
                     </div>
 
                     <button className={styles.registerBtn} type="submit">

@@ -13,7 +13,7 @@ export default function Navbar() {
     return (
         <nav>
             <div className={styles.nav}>
-                <Text varient={'h1'} style={{ margin: 0 }}>NESTOVA HOTEL</Text>
+                <Text varient={'h1'} style={{ margin: 0 }}>NESTOVA</Text>
                 <img onClick={navigateToProfile} src={profile} alt='profile' className={styles.profileImg} />
             </div>
         </nav>

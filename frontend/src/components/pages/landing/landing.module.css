@@ -4,5 +4,57 @@
     align-items: center;
     justify-content: center;
     height: 150vh;
-    background-color: aquamarine;
+    width: 100%;
+}
+
+.imageContainer {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.hotelImg {
+    width: 100%;
+    display: block;
+    height: 350px;
+}
+
+.buttonGroup {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 15px;
+    z-index: 10;
+}
+
+.loginBtn,
+.registerBtn {
+    padding: 12px 24px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    transition: background-color 0.2s;
+}
+
+.loginBtn {
+    background-color: #07386f;
+    color: white;
+}
+
+.loginBtn:hover {
+    background-color: #0b335c;
+}
+
+.registerBtn {
+    background-color: #ffffff;
+    color: #062951;
+    border: 2px solid #0c2f57;
+}
+
+.registerBtn:hover {
+    background-color: #f0f7ff;
 }

@@ -29,15 +29,16 @@ export const registerThunk = createAsyncThunk(
     'auth/registerUser',
     async (userInfo: Omit<User, 'id'>, api) => {
         try {
-            const results = await axios.post('http://localhost:5000/users', userInfo)
-            return results.data
+            const results = await axios.post('/api/register', userInfo);
+            return results.data;
         }
         catch (error: any) {
-            return api.rejectWithValue(error.message || 'error ocurred')
-
+            const serverMessage = error.response?.data?.message || error.response?.data || error.message || 'error occurred';
+            return api.rejectWithValue(serverMessage);
         }
     }
-)
+);
+
 
 export const registerSlice = createSlice({
     name: 'register',
@@ -56,6 +57,10 @@ export const registerSlice = createSlice({
         setpassword: (state, action: PayloadAction<string>) => {
             state.password = action.payload
         },
+
+        setRole: (state, action: PayloadAction<'Admin' | 'User'>) => {
+            state.role = action.payload
+        }
 
     },
 
@@ -80,5 +85,5 @@ export const registerSlice = createSlice({
 
 })
 
-export const { setName, setEmail, setpassword } = registerSlice.actions
+export const { setName, setEmail, setpassword, setRole } = registerSlice.actions
 export default registerSlice.reducer

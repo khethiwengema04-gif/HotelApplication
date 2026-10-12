@@ -1,18 +1,38 @@
 .nav {
+    position: fixed;
+    /* Keeps the navbar locked to the top when scrolling */
     top: 0;
+    left: 0;
     display: flex;
     flex-direction: row;
     align-items: center;
-    height: 100px;
+    justify-content: space-between;
+    height: 80px;
     width: 100%;
-    background-color: rgb(23, 191, 157);
-    border: solid rgb(38, 159, 138);
-    gap: 1000px;
+    background-color: #1d0547;
+    color: white;
+    padding: 0 40px;
+    box-sizing: border-box;
+    /* Prevents padding from breaking the 100% width */
+    z-index: 100;
+    /* Ensures navbar sits on top of your background images */
+}
+
+.nav h1 {
+    color: white;
+    font-size: 24px;
 }
 
 .profileImg {
-    width: 80px;
-    height: 70px;
-    gap: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.profileImg:hover {
+    transform: scale(1.05);
 
 }

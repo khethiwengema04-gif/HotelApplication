@@ -1,21 +1,35 @@
-import styles from './Landing.module.css'
+import styles from './landing.module.css'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../../navbar/navbar'
-import Hotel_Inspo from '../../../assets/Hotel_Inspo.webp'
+import Hotel_Inspo from '../../../assets/Hotel_Inspo.png'
 
 export const Landing = () => {
 
     const navigate = useNavigate();
-    const handleStart = () => {
+    const handleLogin = () => {
         navigate('/login')
+    }
+    const handleRegister = () => {
+        navigate('/register')
     }
     return (
         <div className={styles.landing}>
             <Navbar />
 
-            <img src={Hotel_Inspo} alt='shoppingIcon' className={styles.shoppingImg} />
+            <div className={styles.imageContainer}>
+                <img src={Hotel_Inspo} alt='shoppingIcon' className={styles.hotelImg} />
 
-            <h1>Welcome to the Hotel</h1>
+                <div className={styles.buttonGroup}>
+                    <button className={styles.loginBtn} onClick={handleLogin}>
+                        Login
+                    </button>
+                    <button className={styles.registerBtn} onClick={handleRegister}>
+                        Register
+                    </button>
+                </div>
+            </div>
+
+            <h1>Welcome to the Hotel site</h1>
             <p>Thank you for believing in us!!!</p>
 
             {/* <button className={styles.startBtn} onClick={handleStart}>

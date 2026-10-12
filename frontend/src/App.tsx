@@ -4,6 +4,7 @@ import Register from './components/pages/register/register'
 // import Profile from './Components/Pages/Profile/Profile'
 import { Landing } from './components/pages/landing/landing'
 
+
 function App() {
   return (
     <>

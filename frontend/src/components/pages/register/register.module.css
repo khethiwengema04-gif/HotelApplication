@@ -1,0 +1,26 @@
+.container {
+    min-height: 250px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #a2b1f7;
+    border-radius: solid navy 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.container h2,
+.container h1 {
+    margin: 0 0 10px 0;
+    /* Clears default margins and adds a little space below */
+    color: #1d0547;
+    font-size: 24px;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
