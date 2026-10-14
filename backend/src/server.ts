@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import { testDbconnection } from './config/database';
 import { initDb } from './config/dbTableConf';
 import authRoutes from "./routes/authRoutes";
+import hotelRoutes from './routes/hotelsRoutes'
 import cors from "cors";
 
 dotenv.config();
@@ -13,7 +14,8 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(cors());
 
-app.use('/api', authRoutes);
+app.use('/api/users', authRoutes);
+app.use('/api/hotels', hotelRoutes);
 
 
 const startServer = async () => {
