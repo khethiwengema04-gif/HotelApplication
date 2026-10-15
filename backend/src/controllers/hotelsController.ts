@@ -11,8 +11,14 @@ import {
 export const createHotel = async (req: Request, res: Response) => {
     try {
         const {
-            name, description, location,
-            star_rating, policies, images, price
+            name,
+            location,
+            description,
+            facilities,
+            policies,
+            price,
+            images,
+            star_rating
         } = req.body;
 
         if (!name || !location) {
@@ -22,8 +28,14 @@ export const createHotel = async (req: Request, res: Response) => {
         }
 
         const hotel = await createHotelService(
-            name, description, location,
-            star_rating, images, price
+            name,
+            location,
+            description,
+            facilities,
+            policies,
+            price,
+            images,
+            star_rating
         );
 
         return res.status(201).json({
@@ -80,43 +92,62 @@ export const getHotelById = async (req: Request, res: Response) => {
 };
 
 // UPDATE HOTEL (Admin Only)
+
 export const updateHotel = async (req: Request, res: Response) => {
     try {
         const id = Number(req.params.id);
+
         const {
-            name, description, address,
-            star_rating, base_price_per_night, total_rooms, available_rooms, policies, images
+            name,
+            description,
+            location,
+            star_rating,
+            price,
+            facilities,
+            policies,
+            images
         } = req.body;
 
-        if (!id) {
+        if (!Number.isInteger(id) || id <= 0) {
             return res.status(400).json({
-                message: "Target Hotel ID mapping parameter is required"
+                message: "A valid Hotel ID is required"
             });
         }
 
         const hotelExists = await findHotelByIdService(id);
+
         if (!hotelExists) {
             return res.status(404).json({
-                message: "Hotel not found to process updates"
+                message: "Hotel not found"
             });
         }
 
         const updatedHotel = await updateHotelService(
-            id, name, description, address,
-            star_rating, base_price_per_night, total_rooms, available_rooms, policies, images
+            id,
+            name,
+            location,
+            description,
+            facilities,
+            policies,
+            price,
+            images,
+            star_rating
         );
 
         return res.status(200).json({
-            message: "Hotel tracking parameters structurally updated successfully",
+            message: "Hotel updated successfully",
             hotel: updatedHotel
         });
+
     } catch (error) {
-        console.error("Update hotel process lifecycle exception error:", error);
+        console.error("Update hotel error:", error);
+
         return res.status(500).json({
             message: "Failed to modify hotel configurations data profile"
         });
     }
 };
+
 
 // DELETE HOTEL (Admin Only)
 export const deleteHotel = async (req: Request, res: Response) => {

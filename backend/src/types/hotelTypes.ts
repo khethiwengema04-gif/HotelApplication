@@ -8,5 +8,8 @@ export interface hotels {
     price: number,
     image_url: string,
     star_rating: number,
-    role: user_role
+    role: user_role,
+    facilities: string[],
+    policies: string,
+    created_at?: Date
 }

@@ -3,30 +3,34 @@ import { query } from "../config/database";
 // Create a hotel listing (Admin Only)
 export const createHotelService = async (
     name: string,
-    description: string,
     location: string,
-    starRating: number,
+    description: string,
+    facilities: string[],
+    policies: string,
     price: number,
-    images: string[]
+    images: string[],
+    star_rating: number
 ) => {
     const result = await query(
         `INSERT INTO hotels 
-        (name, description, location, star_rating, image_url, price)
-        VALUES ($1, $2, $3, $4, $5, $6)
+        (name, location, description, facilities, policies, price, images, star_rating)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
         RETURNING *`,
         [
             name,
-            description,
             location,
-            starRating,
+            description,
+            facilities,
+            policies,
             price,
-            JSON.stringify(images),
-
+            images,
+            star_rating
         ]
     );
 
     return result.rows[0];
 };
+
 
 // Find all hotels 
 export const findAllHotelsService = async () => {
@@ -40,12 +44,12 @@ export const findAllHotelsService = async () => {
 };
 
 // Find hotel by ID
-export const findHotelByIdService = async (hotelId: number) => {
+export const findHotelByIdService = async (id: number) => {
     const result = await query(
         `SELECT *
          FROM hotels
          WHERE id = $1`,
-        [hotelId]
+        [id]
     );
 
     return result.rows[0] || null;
@@ -53,46 +57,50 @@ export const findHotelByIdService = async (hotelId: number) => {
 
 // Update hotel details 
 export const updateHotelService = async (
-    hotelId: number,
+    id: number,
     name: string,
+    location: string,
     description: string,
-    address: string,
-    starRating: number,
-    basePricePerNight: number,
-    totalRooms: number,
-    availableRooms: number,
-    policies: object,
-    images: string[]
+    facilities: string[],
+    policies: string,
+    price: number,
+    images: string[],
+    star_rating: number
 ) => {
     const result = await query(
-        `UPDATE hotels 
-         SET name = $1, description = $2, location = $3,  
-             star_rating = $4, total_rooms = $5, available_rooms = $6,
-             policies = $7, images = $8
-         WHERE id = $10
+        `UPDATE hotels
+         SET name = $1,
+             location = $2,
+             description = $3,
+             facilities = $4,
+             policies = $5,
+             price = $6,
+             images = $7,
+             star_rating = $8
+         WHERE id = $9
          RETURNING *`,
         [
             name,
+            location,
             description,
-            address,
-            starRating,
-            totalRooms,
-            availableRooms,
-            JSON.stringify(policies),
-            JSON.stringify(images),
-            hotelId
+            facilities,
+            policies,
+            price,
+            images,
+            star_rating,
+            id
         ]
     );
 
     return result.rows[0] || null;
 };
 
-export const deleteHotelService = async (hotelId: number) => {
+export const deleteHotelService = async (id: number) => {
     const result = await query(
         `DELETE FROM hotels 
          WHERE id = $1
          RETURNING *`,
-        [hotelId]
+        [id]
     );
 
     return result.rows[0] || null;

@@ -11,7 +11,11 @@ CREATE TABLE IF NOT EXISTS hotels (
     name VARCHAR(255) NOT NULL,
     location VARCHAR(255) NOT NULL,
     description TEXT,
+    facilities TEXT[],
+    policies TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     price DECIMAL(10, 2) NOT NULL,
-    image_url VARCHAR(255),
+    images TEXT[],
     star_rating INT CHECK (star_rating >= 1 AND star_rating <= 5)
+
 );
