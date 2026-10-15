@@ -6,8 +6,8 @@ import {
     registerThunk,
     setName,
     setEmail,
-    setpassword,
-    setRole
+    setpassword
+
 } from '../../../features/register'
 
 
@@ -30,48 +30,66 @@ const Register = () => {
         }
     }
 
+
     return (
         <div className={styles.container}>
 
-            <div className="header">
-                <h1 className="text">Register</h1>
-                <div className="underline"></div>
-            </div>
-            <form onSubmit={handleFormSubmit}>
-                <div className="inputs" >
-                    <div className="name">
-                        <p>Full Names</p>
-                        <input type="text" value={name} onChange={(e) => dispatch(setName(e.target.value))} />
-                    </div>
+            <div className={styles.registerBox}>
 
-
-                    <div className="email">
-                        <p>Email</p>
-                        <input type="text" value={email} onChange={(e) => dispatch(setEmail(e.target.value))} />
-                    </div>
-
-                    <div className="password">
-                        <p>Password</p>
-                        <input type="text" value={password} onChange={(e) => dispatch(setpassword(e.target.value))} />
-                    </div>
-
-                    <div className="role">
-                        <p>Role</p>
-                        <select value={role} onChange={(e) => dispatch(setRole(e.target.value as 'Admin' | 'User'))}>
-                            <option value="User">User</option>
-                            <option value="Admin">Admin</option>
-                        </select>
-                    </div>
-
-                    <button className={styles.registerBtn} type="submit">
-                        REGISTER
-                    </button>
-
+                <div className={styles.header}>
+                    <h1 className={styles.text}>Register</h1>
+                    <div className={styles.underline}></div>
                 </div>
-            </form>
 
+                <form onSubmit={handleFormSubmit}>
+                    <div className={styles.inputs}>
+
+                        <div className={styles.name}>
+                            <p>Full Names</p>
+                            <input
+                                type="text"
+                                value={name}
+                                onChange={(e) =>
+                                    dispatch(setName(e.target.value))
+                                }
+                            />
+                        </div>
+
+                        <div className={styles.email}>
+                            <p>Email</p>
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={(e) =>
+                                    dispatch(setEmail(e.target.value))
+                                }
+                            />
+                        </div>
+
+                        <div className={styles.password}>
+                            <p>Password</p>
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) =>
+                                    dispatch(setpassword(e.target.value))
+                                }
+                            />
+                        </div>
+
+                        <button
+                            className={styles.registerBtn}
+                            type="submit"
+                        >
+                            REGISTER
+                        </button>
+
+                    </div>
+                </form>
+
+            </div>
         </div>
-    )
+    );
 }
 
 export default Register

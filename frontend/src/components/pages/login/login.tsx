@@ -4,19 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../../store';
 import { loginThunk } from '../../../features/login'
-import {
-    setEmail,
-    setpassword
-} from '../../../features/register'
+import { setEmail, setpassword, setRole } from '../../../features/register'
 
 
 const login = () => {
 
     const email = useSelector((state: RootState) => state.register.email)
     const password = useSelector((state: RootState) => state.register.password)
+    const role = useSelector((state: RootState) => state.register.role)
 
 
-    // export const Log = () => {
     const navigate = useNavigate();
 
     const dispatch = useDispatch()
@@ -53,6 +50,13 @@ const login = () => {
                         <input type="password" className={styles.passwordInput}
                             value={password}
                             onChange={(e) => dispatch(setpassword(e.target.value))} />
+                    </div>
+                    <div className="role">
+                        <p>Role</p>
+                        <select value={role} onChange={(e) => dispatch(setRole(e.target.value as 'Admin' | 'User'))}>
+                            <option value="User">User</option>
+                            <option value="Admin">Admin</option>
+                        </select>
                     </div>
 
                     <button className={styles.loginBtn}>
