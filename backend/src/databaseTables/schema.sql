@@ -19,3 +19,23 @@ CREATE TABLE IF NOT EXISTS hotels (
     star_rating INT CHECK (star_rating >= 1 AND star_rating <= 5)
 
 );
+
+CREATE TABLE IF NOT EXISTS rooms (
+    id SERIAL PRIMARY KEY,
+    hotel_id FOREIGN KEY,
+    room_type VARCHAR(255) NOT NULL,
+    price_per_night INT,
+    is_available BOOLEAN
+)
+
+CREATE TABLE IF NOT EXISTS room_types (
+    id SERIAL PRIMARY KEY,
+    hotel_id INTEGER NOT NULL REFERENCES hotels(id) ON DELETE CASCADE,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    capacity INTEGER NOT NULL CHECK (capacity > 0),
+    price_per_night NUMERIC(10, 2) NOT NULL CHECK (price_per_night >= 0),
+    total_rooms INTEGER NOT NULL DEFAULT 1 CHECK (total_rooms >= 0),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_available BOOLEAN
+);
