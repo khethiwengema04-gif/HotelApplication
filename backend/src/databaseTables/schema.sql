@@ -90,3 +90,25 @@ CREATE INDEX IF NOT EXISTS idx_bookings_room_dates
     ON bookings(room_type_id, check_in, check_out);
 CREATE INDEX IF NOT EXISTS idx_bookings_status
     ON bookings(status);
+
+
+
+CREATE TABLE IF NOT EXISTS reviews (
+id SERIAL PRIMARY KEY,
+user_id INTEGER NOT NULL
+    REFERENCES users(id) ON DELETE CASCADE,
+hotel_id INTEGER NOT NULL
+   REFERENCES hotels(id) ON DELETE CASCADE,
+rating INTEGER NOT NULL
+   CHECK (rating >= 1 AND rating <= 5),
+comment TEXT,
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+CONSTRAINT unique_user_hotel_review UNIQUE (user_id, hotel_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_reviews_hotel_id
+    ON reviews(hotel_id);
+
+CREATE INDEX IF NOT EXISTS idx_reviews_user_id
+    ON reviews(user_id);
