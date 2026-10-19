@@ -54,3 +54,39 @@ CREATE TABLE IF NOT EXISTS favourites (
 
 CREATE INDEX IF NOT EXISTS idx_favourites_user_id
     ON favourites(user_id);
+
+
+
+CREATE TABLE IF NOT EXISTS bookings (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL
+        REFERENCES users(id) ON DELETE RESTRICT,
+    room_type_id INTEGER NOT NULL
+        REFERENCES room_types(id) ON DELETE RESTRICT,
+    check_in DATE NOT NULL,
+    check_out DATE NOT NULL,
+    rooms_booked INTEGER NOT NULL DEFAULT 1
+        CHECK (rooms_booked > 0),
+    guest_count INTEGER NOT NULL
+        CHECK (guest_count > 0),
+    price_per_night NUMERIC(10, 2) NOT NULL
+        CHECK (price_per_night >= 0),
+    total_price NUMERIC(12, 2) NOT NULL
+        CHECK (total_price >= 0),
+    status VARCHAR(20) NOT NULL DEFAULT 'Pending'
+        CHECK ( status IN ('Pending','Confirmed','Rejected','Cancelled','Completed')
+        ),
+
+    special_requests TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT valid_booking_dates
+        CHECK (check_out > check_in)
+);
+
+CREATE INDEX IF NOT EXISTS idx_bookings_user_id
+    ON bookings(user_id);
+CREATE INDEX IF NOT EXISTS idx_bookings_room_dates
+    ON bookings(room_type_id, check_in, check_out);
+CREATE INDEX IF NOT EXISTS idx_bookings_status
+    ON bookings(status);
