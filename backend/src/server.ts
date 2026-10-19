@@ -5,6 +5,7 @@ import { initDb } from './config/dbTableConf';
 import authRoutes from "./routes/authRoutes";
 import hotelRoutes from './routes/hotelsRoutes'
 import cors from "cors";
+import favouriteRoutes from "./routes/favouritesRoutes";
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ app.use(cors());
 
 app.use('/api/users', authRoutes);
 app.use('/api/hotels', hotelRoutes);
+app.use("/api/favourites", favouriteRoutes);
 
 
 const startServer = async () => {

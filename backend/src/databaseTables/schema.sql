@@ -39,3 +39,18 @@ CREATE TABLE IF NOT EXISTS room_types (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     is_available BOOLEAN
 );
+
+CREATE TABLE IF NOT EXISTS favourites (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL
+        REFERENCES users(id) ON DELETE CASCADE,
+    hotel_id INTEGER NOT NULL
+        REFERENCES hotels(id) ON DELETE CASCADE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT unique_user_hotel
+        UNIQUE (user_id, hotel_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_favourites_user_id
+    ON favourites(user_id);
