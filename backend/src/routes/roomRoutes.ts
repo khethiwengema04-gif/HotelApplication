@@ -3,7 +3,6 @@ import {
     createRoom, getRoomsByHotel, getRoomById,
     updateRoom, deleteRoom
 } from "../controllers/roomController";
-
 import { protect } from "../middleware/authMiddleware";
 import { isAdmin } from "../middleware/hotelsMiddleware";
 

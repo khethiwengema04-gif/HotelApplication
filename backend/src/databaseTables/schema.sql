@@ -22,11 +22,12 @@ CREATE TABLE IF NOT EXISTS hotels (
 
 CREATE TABLE IF NOT EXISTS rooms (
     id SERIAL PRIMARY KEY,
-    hotel_id FOREIGN KEY,
+    hotel_id INTEGER REFERENCES hotels(id) ON DELETE CASCADE, 
     room_type VARCHAR(255) NOT NULL,
     price_per_night INT,
     is_available BOOLEAN
-)
+); 
+
 
 CREATE TABLE IF NOT EXISTS room_types (
     id SERIAL PRIMARY KEY,
@@ -76,7 +77,6 @@ CREATE TABLE IF NOT EXISTS bookings (
     status VARCHAR(20) NOT NULL DEFAULT 'Pending'
         CHECK ( status IN ('Pending','Confirmed','Rejected','Cancelled','Completed')
         ),
-
     special_requests TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

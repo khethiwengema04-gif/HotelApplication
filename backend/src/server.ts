@@ -6,6 +6,9 @@ import authRoutes from "./routes/authRoutes";
 import hotelRoutes from './routes/hotelsRoutes'
 import cors from "cors";
 import favouriteRoutes from "./routes/favouritesRoutes";
+import bookingRoutes from "./routes/bookingRoutes";
+import roomRoutes from "./routes/roomRoutes"
+import reviewRoutes from "./routes/reviewRoutes"
 
 dotenv.config();
 
@@ -18,6 +21,10 @@ app.use(cors());
 app.use('/api/users', authRoutes);
 app.use('/api/hotels', hotelRoutes);
 app.use("/api/favourites", favouriteRoutes);
+app.use("/api/booking", bookingRoutes);
+app.use("api/room", roomRoutes);
+app.use("api/review", reviewRoutes);
+
 
 
 const startServer = async () => {
