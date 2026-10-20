@@ -11,10 +11,12 @@ export const findUserByEmail = async (email: string): Promise<User | null> => {
 export const createUser = async (userData: new_user): Promise<User> => {
     const { email, password, name, role } = userData
     const salt = await bcrypt.genSalt(10);
+    const password_hash = await bcrypt.hash(password, salt)
 
+    console.log("[DEBUG - SERVICE] Hashing complete. Generated Hash string:", password_hash);
     const { rows } = await query(
         "INSERT INTO users (email, password, name, role) VALUES ($1,$2,$3,$4) RETURNING*",
-        [email, password, name, role]
+        [email, password_hash, name, role]
     );
     return rows[0];
 };

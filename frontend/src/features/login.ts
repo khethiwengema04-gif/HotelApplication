@@ -17,16 +17,14 @@ const initialState: loginState = {
     error: null,
 }
 
-// get thunk
+// post thunk
 
 export const loginThunk = createAsyncThunk(
     'auth/loginUser',
     async (userDetail: { email: string; password: Required<User>['password'] }, api) => {
         try {
-            const results = await axios.get<User[]>
-                (`http://localhost:5000/users?email=${userDetail.email}&password=${userDetail.password}`
-
-                )
+            const results = await axios.post<User[]>
+                ('api/login', userDetail)
             if (results.data.length === 0) {
                 return api.rejectWithValue("invalid info")
             }
