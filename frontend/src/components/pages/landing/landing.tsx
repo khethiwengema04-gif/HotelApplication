@@ -31,10 +31,6 @@ export const Landing = () => {
 
             <h1>Welcome to our NESTOVA Hotel site</h1>
             <p>Thank you for believing in us!!!</p>
-
-            {/* <button className={styles.startBtn} onClick={handleStart}>
-                Get Started
-            </button> */}
         </div>
     )
 }
