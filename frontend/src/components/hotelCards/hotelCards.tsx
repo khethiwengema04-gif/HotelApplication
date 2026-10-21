@@ -9,7 +9,7 @@ export type HotelCardProps =
 
         name: string,
         description: string,
-        // location: string,
+        location: string,
         imglink: string,
         price: number,
         rating: number,
@@ -17,12 +17,12 @@ export type HotelCardProps =
         // policies: string,
         id: number,
         viewHotel: (id: number) => void,
-        // addToFavourites: (id: number) => void,
-        // shareHotel: (id: number) => void
+        addToFavourites: (id: number) => void,
+        shareHotel: (id: number) => void
     }
 
-export const HotelCard: React.FC<HotelCardProps> = ({ name, description, imglink,
-    price, rating, id, viewHotel
+export const HotelCard: React.FC<HotelCardProps> = ({ name, description, imglink, location,
+    price, rating, id, viewHotel, addToFavourites, shareHotel
 }) => {
     return (
         <div className={styles['hotel-card']}>
@@ -39,9 +39,9 @@ export const HotelCard: React.FC<HotelCardProps> = ({ name, description, imglink
                     {name}
                 </Text>
 
-                {/* <Text varient={'span'}>
+                <Text varient={'span'}>
                     📍 {location}
-                </Text> */}
+                </Text>
 
                 <Text varient={'span'}>
                     {description}
@@ -71,15 +71,29 @@ export const HotelCard: React.FC<HotelCardProps> = ({ name, description, imglink
                     {policies}
                 </Text> */}
 
-                <button className={styles['hotel-button']} onClick={() => viewHotel(id)}>View details</button>
-                {/* <button
-                    className={styles['hotel-button']}
-                    onClick={() => addToFavourites(id)}
-                >Add to Favourites ♡</button> */}
 
-                {/* <button
-                    className={styles['hotel-button']}
-                    onClick={() => shareHotel(id)}>Share Hotel</button> */}
+                <div className={styles['hotel-actions']}>
+                    <button
+                        className={`${styles['hotel-button']} ${styles['view-button']}`}
+                        onClick={() => viewHotel(id)}
+                    >
+                        View details
+                    </button>
+
+                    <button
+                        className={`${styles['hotel-button']} ${styles['favourite-button']}`}
+                        onClick={() => addToFavourites(id)}
+                    >
+                        ♡ Favourite
+                    </button>
+
+                    <button
+                        className={`${styles['hotel-button']} ${styles['share-button']}`}
+                        onClick={() => shareHotel(id)}
+                    >
+                        ↗ Share
+                    </button>
+                </div>
 
             </div>
         </div>
