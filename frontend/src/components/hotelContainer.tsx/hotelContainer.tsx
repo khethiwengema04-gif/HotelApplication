@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { HotelCard } from '../hotelCards/hotelCards'
+import { HotelCard } from '../cards/cards'
 import styles from './hotelContainer.module.css'
 import type { Hotel } from '../../types'
 

@@ -7,7 +7,7 @@ export interface User {
     name: string,
     email: string,
     password: string,
-    role?: 'Admin' | 'User'
+    role: 'Admin' | 'User'
 }
 
 export interface RegisterState extends User {

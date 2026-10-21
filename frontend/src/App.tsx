@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
-// import { Home } from './Components/Pages/Home/Home'
+import Home from './components/pages/home/home'
 import Register from './components/pages/register/register'
 // import Profile from './Components/Pages/Profile/Profile'
 import { Landing } from './components/pages/landing/landing'
@@ -15,9 +15,8 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-
-        <Route path="/admin" element={< Admin />} />
-
+        <Route path="/home" element={<Home />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </>
 

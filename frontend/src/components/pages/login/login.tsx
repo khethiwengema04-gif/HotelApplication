@@ -21,8 +21,12 @@ const login = () => {
         e.preventDefault()
         const loginUser = await dispatch(loginThunk({ email, password }) as any)
         if (loginThunk.fulfilled.match(loginUser)) {
-            alert('Log In')
-            navigate('/admin')
+            if (loginUser.payload.role === 'Admin') {
+                alert('Log In')
+                navigate('/admin')
+            } else {
+                navigate('/home')
+            }
         }
         if (loginThunk.rejected.match(loginUser)) {
             alert(loginUser.payload as string || "Invalid password")

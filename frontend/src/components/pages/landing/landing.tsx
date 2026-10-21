@@ -7,8 +7,8 @@ import type { RootState, AppDispatch } from '../../../store'
 import { fetchHotels } from '../../../features/hotels'
 import Navbar from '../../navbar/navbar'
 import Hotel_Inspo from '../../../assets/Hotel_Inspo.png'
-import { HotelContainer } from '../../hotelContainer/hotelContainer'
-import HotelCard from '../../hotelCards/hotelCards'
+import { HotelContainer } from '../../hotelContainer.tsx/hotelContainer'
+import HotelCard from '../../cards/cards'
 
 export const Landing = () => {
     const navigate = useNavigate()

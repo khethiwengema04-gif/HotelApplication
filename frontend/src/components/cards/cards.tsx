@@ -1,6 +1,6 @@
 
 import React from 'react'
-import styles from './hotelCards.module.css'
+import styles from './cards.module.css'
 import { Text } from '../text/text'
 
 
