@@ -41,7 +41,6 @@ export const loginSlice = createSlice({
     initialState,
 
     reducers: {
-
     },
 
     extraReducers: (build) => {

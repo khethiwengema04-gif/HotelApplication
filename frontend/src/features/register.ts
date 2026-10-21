@@ -29,7 +29,7 @@ export const registerThunk = createAsyncThunk(
     'auth/registerUser',
     async (userInfo: Omit<User, 'id'>, api) => {
         try {
-            const results = await axios.post('/api/register', userInfo);
+            const results = await axios.post('/api/users/register', userInfo);
             return results.data;
         }
         catch (error: any) {

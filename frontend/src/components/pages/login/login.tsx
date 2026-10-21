@@ -12,8 +12,6 @@ const login = () => {
     const email = useSelector((state: RootState) => state.register.email)
     const password = useSelector((state: RootState) => state.register.password)
     const role = useSelector((state: RootState) => state.register.role)
-
-
     const navigate = useNavigate();
 
     const dispatch = useDispatch()
@@ -21,12 +19,10 @@ const login = () => {
         e.preventDefault()
         const loginUser = await dispatch(loginThunk({ email, password }) as any)
         if (loginThunk.fulfilled.match(loginUser)) {
-            if (loginUser.payload.role === 'Admin') {
-                alert('Log In')
-                navigate('/admin')
-            } else {
-                navigate('/home')
-            }
+            alert('Log In')
+            navigate('/admin')
+
+
         }
         if (loginThunk.rejected.match(loginUser)) {
             alert(loginUser.payload as string || "Invalid password")
