@@ -8,6 +8,7 @@ import { fetchHotels } from '../../../features/hotels'
 import Navbar from '../../navbar/navbar'
 import Hotel_Inspo from '../../../assets/Hotel_Inspo.png'
 import { HotelContainer } from '../../hotelContainer/hotelContainer'
+import HotelCard from '../../hotelCards/hotelCards'
 
 export const Landing = () => {
     const navigate = useNavigate()
@@ -30,6 +31,14 @@ export const Landing = () => {
     }
 
     const viewHotel = (id: number) => {
+        navigate(`/hotels/${id}`)
+    }
+
+    const addToFavourites = (id: number) => {
+        navigate(`/hotels/${id}`)
+    }
+
+    const shareHotel = (id: number) => {
         navigate(`/hotels/${id}`)
     }
 
@@ -77,6 +86,8 @@ export const Landing = () => {
                 <HotelContainer
                     hotels={hotels}
                     viewHotel={viewHotel}
+                    addToFavourites={addToFavourites}
+                    shareHotel={shareHotel}
                 />
             )}
 

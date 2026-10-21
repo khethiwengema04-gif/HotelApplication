@@ -7,11 +7,14 @@ import type { Hotel } from '../../types'
 type HotelContainerProps = {
     hotels: Hotel[],
     viewHotel: (id: number) => void
+    addToFavourites: (id: number) => void
+    shareHotel: (id: number) => void
+
 }
 
 export const HotelContainer: React.FC<HotelContainerProps> = ({
     hotels,
-    viewHotel
+    viewHotel, addToFavourites, shareHotel
 }) => {
     return (
         <div id={styles['hotel-container']}>
@@ -24,7 +27,11 @@ export const HotelContainer: React.FC<HotelContainerProps> = ({
                     imglink={hotel.imglink}
                     rating={hotel.rating}
                     id={hotel.id}
+                    location={hotel.location}
                     viewHotel={viewHotel}
+                    addToFavourites={addToFavourites}
+                    shareHotel={shareHotel}
+
                 />
             ))}
         </div>
