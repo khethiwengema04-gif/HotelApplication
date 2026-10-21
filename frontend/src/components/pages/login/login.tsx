@@ -22,7 +22,7 @@ const login = () => {
         const loginUser = await dispatch(loginThunk({ email, password }) as any)
         if (loginThunk.fulfilled.match(loginUser)) {
             alert('Log In')
-            navigate('/home')
+            navigate('/admin')
         }
         if (loginThunk.rejected.match(loginUser)) {
             alert(loginUser.payload as string || "Invalid password")
