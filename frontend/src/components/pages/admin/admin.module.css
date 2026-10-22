@@ -1,0 +1,283 @@
+.dashboard {
+    display: flex;
+    min-height: 100vh;
+    background: #f5f6fa;
+    color: #24243b;
+    font-family: Arial, sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    background: #160d38;
+    color: white;
+    padding: 30px 18px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.logo {
+    font-size: 27px;
+    margin: 0 0 38px;
+    color: white;
+}
+
+.adminLabel {
+    color: #a8a0c5;
+    font-size: 11px;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.navigation a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #d5d0e5;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.navigation a:hover,
+.navigation .activeLink {
+    background: #493580;
+    color: white;
+}
+
+.logoutButton {
+    margin-top: auto;
+    padding: 12px;
+    background: transparent;
+    border: 1px solid #72678f;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.logoutButton:hover {
+    background: #493580;
+}
+
+/* Main Content */
+.mainContent {
+    flex: 1;
+    min-width: 0;
+    padding: 35px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 35px;
+}
+
+.header h1 {
+    font-size: 28px;
+    margin: 0 0 8px;
+    color: #20143e;
+}
+
+.header p {
+    color: #77758a;
+    margin: 0;
+}
+
+.adminProfile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+}
+
+.avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #e5def8;
+    color: #392568;
+    font-weight: bold;
+}
+
+/* Summary Cards */
+.summaryCards {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+    margin-bottom: 35px;
+}
+
+.card {
+    background: white;
+    border: 1px solid #e8e6ef;
+    border-radius: 12px;
+    padding: 22px;
+    box-shadow: 0 3px 12px rgba(30, 20, 60, 0.04);
+}
+
+.cardIcon {
+    color: #59419a;
+    font-size: 25px;
+}
+
+.card p {
+    color: #77758a;
+    font-size: 13px;
+    margin: 18px 0 10px;
+}
+
+.card h2 {
+    font-size: 30px;
+    margin: 0 0 8px;
+    color: #20143e;
+}
+
+.card small {
+    color: #858296;
+    font-size: 12px;
+}
+
+/* Sections */
+.section {
+    margin-bottom: 30px;
+}
+
+.section h2 {
+    font-size: 19px;
+    margin-bottom: 18px;
+    color: #20143e;
+}
+
+.actions {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.primaryButton,
+.secondaryButton {
+    padding: 13px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.primaryButton {
+    background: #392568;
+    color: white;
+    border: 1px solid #392568;
+}
+
+.primaryButton:hover {
+    background: #493580;
+}
+
+.secondaryButton {
+    background: white;
+    color: #392568;
+    border: 1px solid #392568;
+}
+
+.secondaryButton:hover {
+    background: #f0ecfa;
+}
+
+/* Reservations Table */
+.tableContainer {
+    background: white;
+    border: 1px solid #e8e6ef;
+    border-radius: 12px;
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 14px;
+}
+
+.table th,
+.table td {
+    padding: 17px 20px;
+    border-bottom: 1px solid #eeeaf5;
+}
+
+.table th {
+    background: #faf9fc;
+    color: #625d76;
+    font-weight: 600;
+}
+
+.table td {
+    color: #77758a;
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+    text-align: center;
+}
+
+/* Responsive Layout */
+@media (max-width: 1100px) {
+    .summaryCards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .mainContent {
+        padding: 25px;
+    }
+}
+
+@media (max-width: 650px) {
+    .dashboard {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .logo {
+        margin-bottom: 20px;
+    }
+
+    .navigation {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .logoutButton {
+        margin-top: 20px;
+    }
+
+    .mainContent {
+        padding: 20px 15px;
+    }
+
+    .header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .summaryCards {
+        grid-template-columns: 1fr;
+    }
+}
