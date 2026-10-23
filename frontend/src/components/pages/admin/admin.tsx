@@ -87,7 +87,7 @@ const Admin = () => {
         <div className={styles.dashboard}>
             {/* Sidebar */}
             <aside className={styles.sidebar}>
-                <h2 className={styles.logo}>LuxeStay</h2>
+                <h2 className={styles.logo}>NESTOVA</h2>
                 <p className={styles.adminLabel}>ADMIN PANEL</p>
 
                 <nav className={styles.navigation}>
@@ -170,26 +170,28 @@ const Admin = () => {
                 {/* Quick Actions */}
                 <section className={styles.section}>
                     <h2>Quick Actions</h2>
-
                     <div className={styles.actions}>
                         <button
+                            type="button"
                             className={styles.primaryButton}
                             onClick={() => {
-                                window.location.hash = 'accommodations'
+                                window.location.href = '/admin/hotels'
                             }}
                         >
                             + Add Accommodation
                         </button>
 
                         <button
+                            type="button"
                             className={styles.secondaryButton}
                             onClick={() => {
-                                window.location.hash = 'reservations'
+                                window.location.href = '/admin/hotels'
                             }}
                         >
-                            View Reservations
+                            Manage Accommodations
                         </button>
                     </div>
+
                 </section>
 
                 {/* Recent Reservations */}
@@ -247,7 +249,7 @@ const Admin = () => {
                     </div>
                 </section>
             </main>
-        </div>
+        </div >
     )
 }
 

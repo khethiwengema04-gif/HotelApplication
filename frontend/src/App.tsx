@@ -5,7 +5,7 @@ import Register from './components/pages/register/register'
 import { Landing } from './components/pages/landing/landing'
 import Login from './components/pages/login/login'
 import Admin from './components/pages/admin/admin'
-
+import AdminHotels from './components/pages/adminHotels/adminHotel'
 
 function App() {
   return (
@@ -16,6 +16,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/hotels" element={<AdminHotels />} />
       </Routes>
     </>
 
