@@ -8,6 +8,7 @@ import {
 } from "../service/hotelsService";
 
 // CREATE HOTEL (Admin Only)
+
 export const createHotel = async (req: Request, res: Response) => {
     try {
         const {
@@ -17,25 +18,37 @@ export const createHotel = async (req: Request, res: Response) => {
             facilities,
             policies,
             price,
-            images,
             star_rating
         } = req.body;
 
-        if (!name || !location) {
+        if (!name || !location || price === undefined || price === "") {
             return res.status(400).json({
-                message: "Hotel name, address, price, and rooms are required"
+                message: "Hotel name, location and price are required"
             });
         }
+
+        // Get the image URLs returned by Cloudinary
+        const uploadedFiles = (req.files || []) as
+            (Express.Multer.File & { path: string })[];
+
+        const images = uploadedFiles.map(file => file.path);
+
+        // Convert facilities from form-data text into an array
+        const facilitiesArray: string[] = Array.isArray(facilities)
+            ? facilities
+            : typeof facilities === "string"
+                ? facilities.split(",").map((item: string) => item.trim()).filter(Boolean)
+                : [];
 
         const hotel = await createHotelService(
             name,
             location,
-            description,
-            facilities,
-            policies,
-            price,
+            description || "",
+            facilitiesArray,
+            policies || "",
+            Number(price),
             images,
-            star_rating
+            Number(star_rating || 3)
         );
 
         return res.status(201).json({
@@ -44,11 +57,14 @@ export const createHotel = async (req: Request, res: Response) => {
         });
     } catch (error) {
         console.error("Create hotel error:", error);
+
         return res.status(500).json({
-            message: "Failed to create hotel listing"
+            message: "Failed to create hotel listing",
+            error: error instanceof Error ? error.message : String(error)
         });
     }
 };
+
 
 // GET ALL HOTELS (Public View)
 export const getAllHotels = async (req: Request, res: Response) => {
@@ -93,20 +109,10 @@ export const getHotelById = async (req: Request, res: Response) => {
 
 // UPDATE HOTEL (Admin Only)
 
+
 export const updateHotel = async (req: Request, res: Response) => {
     try {
         const id = Number(req.params.id);
-
-        const {
-            name,
-            description,
-            location,
-            star_rating,
-            price,
-            facilities,
-            policies,
-            images
-        } = req.body;
 
         if (!Number.isInteger(id) || id <= 0) {
             return res.status(400).json({
@@ -122,31 +128,60 @@ export const updateHotel = async (req: Request, res: Response) => {
             });
         }
 
-        const updatedHotel = await updateHotelService(
-            id,
+        const {
             name,
             location,
             description,
             facilities,
             policies,
             price,
-            images,
             star_rating
+        } = req.body;
+
+        const uploadedFiles = (req.files || []) as
+            (Express.Multer.File & { path: string })[];
+
+        // Preserve existing images if no new files are uploaded
+        const images = uploadedFiles.length > 0
+            ? uploadedFiles.map(file => file.path)
+            : hotelExists.images;
+
+        const facilitiesArray: string[] = Array.isArray(facilities)
+            ? facilities
+            : typeof facilities === "string"
+                ? facilities.split(",").map((item: string) => item.trim()).filter(Boolean)
+                : hotelExists.facilities;
+
+        const updatedHotel = await updateHotelService(
+            id,
+            name ?? hotelExists.name,
+            location ?? hotelExists.location,
+            description ?? hotelExists.description,
+            facilitiesArray,
+            policies ?? hotelExists.policies,
+            price !== undefined && price !== ""
+                ? Number(price)
+                : Number(hotelExists.price),
+            images,
+            star_rating !== undefined && star_rating !== ""
+                ? Number(star_rating)
+                : hotelExists.star_rating
         );
 
         return res.status(200).json({
             message: "Hotel updated successfully",
             hotel: updatedHotel
         });
-
     } catch (error) {
         console.error("Update hotel error:", error);
 
         return res.status(500).json({
-            message: "Failed to modify hotel configurations data profile"
+            message: "Failed to update hotel",
+            error: error instanceof Error ? error.message : String(error)
         });
     }
 };
+
 
 
 // DELETE HOTEL (Admin Only)

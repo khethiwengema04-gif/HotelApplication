@@ -112,3 +112,5 @@ CREATE INDEX IF NOT EXISTS idx_reviews_hotel_id
 
 CREATE INDEX IF NOT EXISTS idx_reviews_user_id
     ON reviews(user_id);
+
+    
