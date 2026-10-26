@@ -90,16 +90,21 @@ const Admin = () => {
                 <h2 className={styles.logo}>NESTOVA</h2>
                 <p className={styles.adminLabel}>ADMIN PANEL</p>
 
+
                 <nav className={styles.navigation}>
-                    <a href="#dashboard" className={styles.activeLink}>
+                    <a href="/admin" className={styles.activeLink}>
                         <span>▦</span> Dashboard
                     </a>
 
-                    <a href="#accommodations">
-                        <span>▣</span> Accommodations
+                    <a href="/admin/hotels">
+                        <span>▣</span> Manage Hotels
                     </a>
 
-                    <a href="#reservations">
+                    <a href="/admin/rooms">
+                        <span>▤</span> Manage Rooms
+                    </a>
+
+                    <a href="/admin#reservations">
                         <span>▤</span> Reservations
                     </a>
 
