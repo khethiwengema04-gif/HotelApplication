@@ -84,7 +84,7 @@ const AdminRooms = () => {
 
         try {
             const response = await axios.get(
-                `/api/hotels/${selectedHotelId}/rooms`
+                `/api/rooms/hotels/${selectedHotelId}/rooms`
             )
 
             const data: Room[] = Array.isArray(response.data)
@@ -169,7 +169,7 @@ const AdminRooms = () => {
 
             if (editingId === null) {
                 await axios.post(
-                    `/api/hotels/${hotelId}/rooms`,
+                    `/api/rooms/hotels/${hotelId}/rooms`,
                     roomData,
                     config
                 )
