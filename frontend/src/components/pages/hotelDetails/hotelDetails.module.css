@@ -1,0 +1,241 @@
+.page {
+    min-height: 100vh;
+    padding: 35px 5%;
+    background: #f4f6fa;
+    color: #17243b;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.backButton {
+    margin-bottom: 25px;
+    padding: 10px 16px;
+    border: 1px solid #ccd5e3;
+    border-radius: 8px;
+    background: white;
+    color: #203a60;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.hotelHeader {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 35px;
+    padding: 28px;
+    border: 1px solid #e1e6ef;
+    border-radius: 16px;
+    background: white;
+    box-shadow: 0 5px 20px rgba(20, 39, 70, 0.04);
+}
+
+.hotelImage {
+    width: 100%;
+    height: 360px;
+    object-fit: cover;
+    border-radius: 12px;
+    background: #edf1f7;
+}
+
+.hotelInfo h1 {
+    margin: 8px 0 12px;
+    color: #172f53;
+    font-size: 32px;
+}
+
+.eyebrow {
+    margin: 0;
+    color: #8b6a32;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.location,
+.description,
+.facilities p,
+.policies p {
+    color: #68758a;
+    line-height: 1.7;
+}
+
+.rating {
+    color: #9a742f;
+    font-weight: 700;
+}
+
+.price {
+    color: #172f53;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.facilities h3,
+.policies h3 {
+    margin-bottom: 5px;
+    color: #203a60;
+    font-size: 15px;
+}
+
+.roomsSection {
+    margin-top: 45px;
+}
+
+.sectionHeading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 22px;
+}
+
+.sectionHeading h2 {
+    margin: 8px 0 0;
+    color: #172f53;
+    font-size: 26px;
+}
+
+.sectionHeading>span {
+    color: #68758a;
+    font-size: 14px;
+}
+
+.roomGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.roomCard {
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    border: 1px solid #e0e6ef;
+    border-radius: 13px;
+    background: white;
+    box-shadow: 0 5px 18px rgba(20, 39, 70, 0.04);
+}
+
+.roomIcon {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: #edf2f9;
+    color: #203a60;
+    font-size: 27px;
+}
+
+.roomCard h3 {
+    margin: 18px 0 8px;
+    color: #172f53;
+    font-size: 20px;
+}
+
+.roomDescription {
+    min-height: 45px;
+    color: #68758a;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.roomMeta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 15px 0;
+    color: #68758a;
+    font-size: 13px;
+}
+
+.roomPrice {
+    margin-top: auto;
+    color: #172f53;
+    font-size: 23px;
+    font-weight: 700;
+}
+
+.roomPrice small {
+    color: #68758a;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.primaryButton {
+    width: 100%;
+    margin-top: 12px;
+    padding: 13px 16px;
+    border: 1px solid #172f53;
+    border-radius: 8px;
+    background: #172f53;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.primaryButton:hover:not(:disabled) {
+    background: #254875;
+}
+
+.primaryButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.secondaryButton {
+    padding: 10px 16px;
+    border: 1px solid #ccd5e3;
+    border-radius: 8px;
+    background: white;
+    color: #203a60;
+    cursor: pointer;
+}
+
+.error {
+    color: #b42332;
+}
+
+.empty {
+    padding: 25px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 10px;
+    color: #68758a;
+    background: white;
+}
+
+@media (max-width: 900px) {
+    .hotelHeader {
+        grid-template-columns: 1fr;
+    }
+
+    .roomGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .page {
+        padding: 20px 15px;
+    }
+
+    .hotelHeader {
+        padding: 16px;
+    }
+
+    .hotelImage {
+        height: 230px;
+    }
+
+    .hotelInfo h1 {
+        font-size: 26px;
+    }
+
+    .roomGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .sectionHeading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
