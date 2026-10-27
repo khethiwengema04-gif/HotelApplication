@@ -113,4 +113,28 @@ CREATE INDEX IF NOT EXISTS idx_reviews_hotel_id
 CREATE INDEX IF NOT EXISTS idx_reviews_user_id
     ON reviews(user_id);
 
-    
+
+CREATE TABLE payments (
+    id SERIAL PRIMARY KEY,
+    booking_id INTEGER NOT NULL
+        REFERENCES bookings(id)
+        ON DELETE RESTRICT,
+    user_id INTEGER NOT NULL
+        REFERENCES users(id)
+        ON DELETE RESTRICT,
+
+    payment_reference VARCHAR(100) UNIQUE NOT NULL,
+    amount DECIMAL(10, 2) NOT NULL
+        CHECK (amount > 0),
+    currency VARCHAR(3) NOT NULL DEFAULT 'ZAR',
+    payment_method VARCHAR(50) DEFAULT 'Paystack',
+    status VARCHAR(20) NOT NULL DEFAULT 'Pending'
+        CHECK (status IN ('Pending', 'Successful', 'Failed')),
+    paid_at TIMESTAMP NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_payments_booking_id
+    ON payments(booking_id);
+CREATE INDEX idx_payments_user_id
+    ON payments(user_id);
