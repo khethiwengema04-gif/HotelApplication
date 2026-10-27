@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
-import styles from './adminReservations.module.css'
+import styles from './adminReservation.module.css'
 
 type BookingStatus =
     | 'Pending'
@@ -30,7 +30,7 @@ interface Booking {
 
 type FilterStatus = 'All' | BookingStatus
 
-const AdminReservations = () => {
+const adminReservations = () => {
     const [bookings, setBookings] = useState<Booking[]>([])
     const [filter, setFilter] = useState<FilterStatus>('All')
     const [loading, setLoading] = useState(true)
@@ -373,4 +373,4 @@ const AdminReservations = () => {
     )
 }
 
-export default AdminReservations
+export default adminReservations
