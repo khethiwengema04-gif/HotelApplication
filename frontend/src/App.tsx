@@ -8,6 +8,9 @@ import Admin from './components/pages/admin/admin'
 import AdminHotels from './components/pages/adminHotels/adminHotel'
 import AdminRooms from './components/adminRooms/adminRooms'
 import HotelDetails from './components/pages/hotelDetails/hotelDetails'
+import Booking from './components/pages/booking/booking'
+import MyBookings from './components/pages/myBookigs/myBookings'
+import AdminReservations from './components/pages/admin/adminReservations'
 
 function App() {
   return (
@@ -16,12 +19,16 @@ function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route path="/home" element={<Home />} />
-
       <Route path="/admin" element={<Admin />} />
       <Route path="/admin/hotels" element={<AdminHotels />} />
       <Route path="/admin/rooms" element={<AdminRooms />} />
-
       <Route path="/hotels/:id" element={<HotelDetails />} />
+      <Route path="/hotels/:id" element={<HotelDetails />} />
+      <Route path="/my-bookings" element={<MyBookings />} />
+      <Route
+        path="/hotels/:id/book/:roomId"
+        element={<Booking />} />
+      <Route path="/admin/reservations" element={<AdminReservations />} />
     </Routes>
   )
 }
