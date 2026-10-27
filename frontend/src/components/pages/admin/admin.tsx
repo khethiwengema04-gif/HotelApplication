@@ -18,6 +18,8 @@ const Admin = () => {
     const [bookings, setBookings] = useState<Booking[]>([])
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState('')
+    const [message, setMessage] = useState('')
+    const [updatingId, setUpdatingId] = useState<number | null>(null)
 
     useEffect(() => {
         const fetchBookings = async () => {
@@ -57,8 +59,71 @@ const Admin = () => {
             }
         }
 
-        fetchBookings()
+        void fetchBookings()
     }, [])
+
+    // Approve or reject a reservation
+    const handleUpdateStatus = async (
+        booking: Booking,
+        status: 'Confirmed' | 'Rejected'
+    ) => {
+        const action = status === 'Confirmed' ? 'approve' : 'reject'
+
+        if (
+            !window.confirm(
+                `Are you sure you want to ${action} booking #${booking.id}?`
+            )
+        ) {
+            return
+        }
+
+        const token = localStorage.getItem('token')
+
+        if (!token) {
+            setError('Please log in again.')
+            return
+        }
+
+        try {
+            setUpdatingId(booking.id)
+            setError('')
+            setMessage('')
+
+            const response = await axios.patch(
+                `/api/bookings/${booking.id}/status`,
+                { status },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+
+            setBookings(previous =>
+                previous.map(item =>
+                    item.id === booking.id
+                        ? { ...item, ...response.data.booking }
+                        : item
+                )
+            )
+
+            setMessage(
+                response.data.message ||
+                `Booking #${booking.id} updated successfully.`
+            )
+        } catch (err: unknown) {
+            if (axios.isAxiosError(err)) {
+                setError(
+                    err.response?.data?.message ||
+                    `Could not ${action} this booking.`
+                )
+            } else {
+                setError('An unexpected error occurred.')
+            }
+        } finally {
+            setUpdatingId(null)
+        }
+    }
 
     const pendingBookings = bookings.filter(
         booking => booking.status === 'Pending'
@@ -90,7 +155,6 @@ const Admin = () => {
                 <h2 className={styles.logo}>NESTOVA</h2>
                 <p className={styles.adminLabel}>ADMIN PANEL</p>
 
-
                 <nav className={styles.navigation}>
                     <a href="/admin" className={styles.activeLink}>
                         <span>▦</span> Dashboard
@@ -104,7 +168,7 @@ const Admin = () => {
                         <span>▤</span> Manage Rooms
                     </a>
 
-                    <a href="/admin#reservations">
+                    <a href="/admin/reservations">
                         <span>▤</span> Reservations
                     </a>
 
@@ -135,9 +199,22 @@ const Admin = () => {
                     </div>
                 </header>
 
+                {/* Error and success messages */}
                 {error && (
-                    <p role="alert" style={{ color: '#b42318', marginBottom: 16 }}>
+                    <p
+                        role="alert"
+                        style={{ color: '#b42318', marginBottom: 16 }}
+                    >
                         {error}
+                    </p>
+                )}
+
+                {message && (
+                    <p
+                        role="status"
+                        style={{ color: '#237547', marginBottom: 16 }}
+                    >
+                        {message}
                     </p>
                 )}
 
@@ -175,6 +252,7 @@ const Admin = () => {
                 {/* Quick Actions */}
                 <section className={styles.section}>
                     <h2>Quick Actions</h2>
+
                     <div className={styles.actions}>
                         <button
                             type="button"
@@ -196,7 +274,6 @@ const Admin = () => {
                             Manage Accommodations
                         </button>
                     </div>
-
                 </section>
 
                 {/* Recent Reservations */}
@@ -212,17 +289,20 @@ const Admin = () => {
                                     <th>Check-in</th>
                                     <th>Check-out</th>
                                     <th>Status</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
 
                             <tbody>
                                 {isLoading ? (
                                     <tr>
-                                        <td colSpan={5}>Loading reservations...</td>
+                                        <td colSpan={6}>
+                                            Loading reservations...
+                                        </td>
                                     </tr>
                                 ) : bookings.length === 0 ? (
                                     <tr>
-                                        <td colSpan={5}>
+                                        <td colSpan={6}>
                                             {error
                                                 ? 'Reservations could not be loaded.'
                                                 : 'No reservations to display yet.'}
@@ -246,6 +326,47 @@ const Admin = () => {
                                             <td>{formatDate(booking.check_in)}</td>
                                             <td>{formatDate(booking.check_out)}</td>
                                             <td>{booking.status}</td>
+
+                                            {/* Approval and rejection buttons */}
+                                            <td>
+                                                {booking.status === 'Pending' ? (
+                                                    <div className={styles.actions}>
+                                                        <button
+                                                            type="button"
+                                                            className={styles.primaryButton}
+                                                            disabled={updatingId !== null}
+                                                            onClick={() =>
+                                                                void handleUpdateStatus(
+                                                                    booking,
+                                                                    'Confirmed'
+                                                                )
+                                                            }
+                                                        >
+                                                            {updatingId === booking.id
+                                                                ? 'Updating...'
+                                                                : 'Approve'}
+                                                        </button>
+
+                                                        <button
+                                                            type="button"
+                                                            className={styles.secondaryButton}
+                                                            disabled={updatingId !== null}
+                                                            onClick={() =>
+                                                                void handleUpdateStatus(
+                                                                    booking,
+                                                                    'Rejected'
+                                                                )
+                                                            }
+                                                        >
+                                                            {updatingId === booking.id
+                                                                ? 'Updating...'
+                                                                : 'Reject'}
+                                                        </button>
+                                                    </div>
+                                                ) : (
+                                                    <span>—</span>
+                                                )}
+                                            </td>
                                         </tr>
                                     ))
                                 )}
@@ -254,7 +375,7 @@ const Admin = () => {
                     </div>
                 </section>
             </main>
-        </div >
+        </div>
     )
 }
 
