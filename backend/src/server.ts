@@ -24,8 +24,8 @@ app.use('/api/users', authRoutes);
 app.use('/api/hotels', hotelRoutes);
 app.use("/api/favourites", favouriteRoutes);
 app.use("/api/bookings", bookingRoutes);
-app.use("api/rooms", roomRoutes);
-app.use("api/reviews", reviewRoutes);
+app.use("/api/rooms", roomRoutes);
+app.use("/api/reviews", reviewRoutes);
 
 
 
