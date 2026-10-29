@@ -1,0 +1,207 @@
+.page {
+    min-height: 100vh;
+    padding: 40px 6%;
+    background: #f5f7fb;
+    color: #172554;
+    box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+.eyebrow {
+    margin: 0 0 8px;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 32px;
+}
+
+.subtitle {
+    margin: 10px 0 0;
+    color: #64748b;
+}
+
+.backButton,
+.primaryButton,
+.removeButton {
+    border-radius: 7px;
+    padding: 11px 15px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.backButton {
+    background: white;
+    border: 1px solid #172554;
+    color: #172554;
+}
+
+.backButton:hover {
+    background: #eaf0f8;
+}
+
+.hotelGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+}
+
+.hotelCard {
+    overflow: hidden;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+}
+
+.hotelImage,
+.imagePlaceholder {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+}
+
+.imagePlaceholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e2e8f0;
+    color: #64748b;
+}
+
+.hotelContent {
+    padding: 20px;
+}
+
+.hotelHeading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.hotelHeading h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.rating {
+    flex-shrink: 0;
+    color: #a16207;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.location {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.description {
+    min-height: 42px;
+    color: #475569;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.price {
+    margin: 18px 0;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.price span {
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.primaryButton,
+.removeButton {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.primaryButton {
+    background: #172554;
+    border: 1px solid #172554;
+    color: white;
+}
+
+.primaryButton:hover {
+    background: #243b75;
+}
+
+.removeButton {
+    background: white;
+    border: 1px solid #172554;
+    color: #172554;
+}
+
+.removeButton:hover:not(:disabled) {
+    background: #f1f5f9;
+}
+
+.removeButton:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.emptyState {
+    max-width: 500px;
+    margin: 70px auto;
+    padding: 40px 24px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background: white;
+    text-align: center;
+}
+
+.heart {
+    color: #172554;
+    font-size: 48px;
+}
+
+.emptyState h2 {
+    margin-bottom: 10px;
+}
+
+.emptyState p,
+.status {
+    color: #64748b;
+}
+
+.error {
+    padding: 12px 15px;
+    border-radius: 7px;
+    background: #fef2f2;
+    color: #b91c1c;
+}
+
+@media (max-width: 600px) {
+    .page {
+        padding: 25px 5%;
+    }
+
+    .header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .header h1 {
+        font-size: 27px;
+    }
+}
