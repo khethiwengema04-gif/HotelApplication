@@ -129,3 +129,10 @@
         font-size: 11px;
     }
 }
+
+
+.favourite-active {
+    background-color: #142b4a;
+    color: #ffffff;
+    border-color: #142b4a;
+}
