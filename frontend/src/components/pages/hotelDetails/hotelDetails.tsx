@@ -1,7 +1,10 @@
+
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import styles from './hotelDetails.module.css'
+import ReviewList from '../../reviewsList/reviewsList'
+import ReviewForm from '../../../components/reviewsForm/reviewsForm'
 
 interface Hotel {
     id: number
@@ -52,7 +55,9 @@ const HotelDetails = () => {
                 const roomData = roomsResponse.data
 
                 setHotel(hotelData)
-                setRooms(Array.isArray(roomData) ? roomData : roomData.rooms ?? [])
+                setRooms(
+                    Array.isArray(roomData) ? roomData : roomData.rooms ?? []
+                )
             } catch (err: unknown) {
                 if (axios.isAxiosError(err)) {
                     setError(
@@ -80,14 +85,25 @@ const HotelDetails = () => {
     }
 
     if (loading) {
-        return <main className={styles.page}><p>Loading hotel details...</p></main>
+        return (
+            <main className={styles.page}>
+                <p>Loading hotel details...</p>
+            </main>
+        )
     }
 
     if (error || !hotel) {
         return (
             <main className={styles.page}>
-                <p className={styles.error}>{error || 'Hotel not found.'}</p>
-                <button className={styles.secondaryButton} onClick={() => navigate('/')}>
+                <p className={styles.error}>
+                    {error || 'Hotel not found.'}
+                </p>
+
+                <button
+                    type="button"
+                    className={styles.secondaryButton}
+                    onClick={() => navigate('/')}
+                >
                     Back to hotels
                 </button>
             </main>
@@ -118,13 +134,20 @@ const HotelDetails = () => {
                 <div className={styles.hotelInfo}>
                     <p className={styles.eyebrow}>DISCOVER NESTOVA</p>
                     <h1>{hotel.name}</h1>
-                    <p className={styles.location}>📍 {hotel.location}</p>
-                    <p className={styles.description}>
-                        {hotel.description || 'Discover a comfortable stay at this hotel.'}
+
+                    <p className={styles.location}>
+                        📍 {hotel.location}
                     </p>
+
+                    <p className={styles.description}>
+                        {hotel.description ||
+                            'Discover a comfortable stay at this hotel.'}
+                    </p>
+
                     <p className={styles.rating}>
                         ★ {hotel.star_rating} / 5
                     </p>
+
                     <p className={styles.price}>
                         From R{Number(hotel.price).toFixed(2)} per night
                     </p>
@@ -151,7 +174,11 @@ const HotelDetails = () => {
                         <p className={styles.eyebrow}>FIND YOUR STAY</p>
                         <h2>Available Room Types</h2>
                     </div>
-                    <span>{rooms.length} room type{rooms.length === 1 ? '' : 's'}</span>
+
+                    <span>
+                        {rooms.length} room type
+                        {rooms.length === 1 ? '' : 's'}
+                    </span>
                 </div>
 
                 {rooms.length === 0 ? (
@@ -161,16 +188,27 @@ const HotelDetails = () => {
                 ) : (
                     <div className={styles.roomGrid}>
                         {rooms.map(room => (
-                            <article className={styles.roomCard} key={room.id}>
+                            <article
+                                className={styles.roomCard}
+                                key={room.id}
+                            >
                                 <div className={styles.roomIcon}>⌂</div>
+
                                 <h3>{room.name}</h3>
+
                                 <p className={styles.roomDescription}>
-                                    {room.description || 'A comfortable room for your stay.'}
+                                    {room.description ||
+                                        'A comfortable room for your stay.'}
                                 </p>
 
                                 <div className={styles.roomMeta}>
-                                    <span>♙ Up to {room.capacity} guests</span>
-                                    <span>{room.total_rooms} room(s) in inventory</span>
+                                    <span>
+                                        ♙ Up to {room.capacity} guests
+                                    </span>
+
+                                    <span>
+                                        {room.total_rooms} room(s) in inventory
+                                    </span>
                                 </div>
 
                                 <p className={styles.roomPrice}>
@@ -184,12 +222,20 @@ const HotelDetails = () => {
                                     disabled={room.total_rooms < 1}
                                     onClick={() => handleBookNow(room)}
                                 >
-                                    {room.total_rooms < 1 ? 'Unavailable' : 'Book Now'}
+                                    {room.total_rooms < 1
+                                        ? 'Unavailable'
+                                        : 'Book Now'}
                                 </button>
                             </article>
                         ))}
                     </div>
                 )}
+            </section>
+
+            {/* Guest reviews */}
+            <section className={styles.roomsSection}>
+                <ReviewList hotelId={hotel.id} />
+                <ReviewForm hotelId={hotel.id} />
             </section>
         </main>
     )
