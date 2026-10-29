@@ -14,11 +14,11 @@
     background: #ffffff;
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 8px 28px rgba(18, 35, 65, 0.12);
+    box-shadow: 0 8px 28px rgba(86, 127, 198, 0.468);
 }
 
 .header {
-    background: #142b4a;
+    background: #214e8ace;
     color: white;
     text-align: center;
     padding: 35px 20px;
