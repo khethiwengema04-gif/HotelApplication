@@ -69,10 +69,17 @@ const Profile = () => {
                     </div>
                 </div>
 
-                {/* My Bookings link */}
+
                 <div className={styles.bookingsLink}>
                     <Link to="/my-bookings">
                         My Bookings
+                    </Link>
+                </div>
+
+
+                <div className={styles.bookingsLink}>
+                    <Link to="/favourites">
+                        My Favourites ♡
                     </Link>
                 </div>
             </div>
