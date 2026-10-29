@@ -12,6 +12,7 @@ import MyBookings from './components/pages/myBookigs/myBookings'
 import AdminReservations from './components/pages/admin/adminReservations'
 import PaymentCallback from './components/pages/paymentCallback/PaymentCallback'
 import Profile from './components/pages/profile/profile'
+import AdminProfile from './components/pages/adminProfile/adminProfile'
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
       <Route path="/admin/reservations" element={<AdminReservations />} />
       <Route path="/payment/callback" element={<PaymentCallback />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/admin/profile" element={<AdminProfile />} />
     </Routes>
   )
 }
