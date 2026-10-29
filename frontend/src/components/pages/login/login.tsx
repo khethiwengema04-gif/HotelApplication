@@ -1,11 +1,24 @@
-
 import React from 'react';
+import axios from 'axios';
 import styles from './LogIn.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { GoogleLogin } from '@react-oauth/google';
+import type { CredentialResponse } from '@react-oauth/google';
 import type { RootState } from '../../../store';
 import { loginThunk } from '../../../features/login';
 import { setEmail, setpassword, setRole } from '../../../features/register';
+
+interface AuthResponse {
+    token: string;
+    user: {
+        id: number;
+        name: string;
+        email: string;
+        role: 'Admin' | 'User';
+    };
+    message?: string;
+}
 
 const Login = () => {
     const email = useSelector(
@@ -23,6 +36,15 @@ const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    const goToUserPage = (userRole: string) => {
+        if (userRole === 'Admin') {
+            navigate('/admin');
+        } else if (userRole === 'User') {
+            navigate('/home');
+        } else {
+            alert('Invalid user role.');
+        }
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -39,13 +61,7 @@ const Login = () => {
                 return;
             }
 
-            if (userRole === 'Admin') {
-                navigate('/admin');
-            } else if (userRole === 'User') {
-                navigate('/home');
-            } else {
-                alert('Invalid user role.');
-            }
+            goToUserPage(userRole);
         } else if (loginThunk.rejected.match(loginUser)) {
             alert(
                 (loginUser.payload as string) ||
@@ -54,6 +70,39 @@ const Login = () => {
         }
     };
 
+    const handleGoogleSuccess = async (
+        credentialResponse: CredentialResponse
+    ) => {
+        if (!credentialResponse.credential) {
+            alert('Google did not return a credential. Please try again.');
+            return;
+        }
+
+        try {
+            const response = await axios.post<AuthResponse>(
+                '/api/users/google',
+                {
+                    credential: credentialResponse.credential
+                }
+            );
+
+            const { token, user } = response.data;
+
+            localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(user));
+
+            goToUserPage(user.role);
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                alert(
+                    error.response?.data?.message ||
+                    'Google login failed. Please try again.'
+                );
+            } else {
+                alert('Something went wrong during Google login.');
+            }
+        }
+    };
 
     return (
         <div className={styles.container}>
@@ -63,7 +112,6 @@ const Login = () => {
                 <form onSubmit={handleSubmit}>
                     <div className={styles.email}>
                         <label>Email Address:</label>
-
                         <input
                             type="email"
                             className={styles.emailInput}
@@ -77,7 +125,6 @@ const Login = () => {
 
                     <div className={styles.password}>
                         <label>Password:</label>
-
                         <input
                             type="password"
                             className={styles.passwordInput}
@@ -89,14 +136,14 @@ const Login = () => {
                         />
                     </div>
 
-
                     <div className={styles.email}>
                         <label>Choose Role:</label>
-
                         <select
                             value={role}
                             onChange={(e) =>
-                                dispatch(setRole(e.target.value as 'Admin' | 'User'))
+                                dispatch(
+                                    setRole(e.target.value as 'Admin' | 'User')
+                                )
                             }
                             required
                         >
@@ -105,7 +152,6 @@ const Login = () => {
                         </select>
                     </div>
 
-
                     <button
                         type="submit"
                         className={styles.loginBtn}
@@ -113,6 +159,21 @@ const Login = () => {
                         LOGIN
                     </button>
                 </form>
+
+                <div className={styles.googleSection}>
+                    <p>Or continue with</p>
+
+                    <GoogleLogin
+                        onSuccess={handleGoogleSuccess}
+                        onError={() =>
+                            alert('Google sign-in was unsuccessful.')
+                        }
+                        text="continue_with"
+                        shape="rectangular"
+                        theme="outline"
+                        width="280"
+                    />
+                </div>
             </div>
         </div>
     );
