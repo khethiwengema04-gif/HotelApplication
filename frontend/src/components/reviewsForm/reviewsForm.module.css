@@ -1,0 +1,73 @@
+.formSection {
+    margin-top: 32px;
+    padding: 24px;
+    border: 1px solid #dce2eb;
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+.formSection h2 {
+    margin: 0 0 8px;
+    color: #172b4d;
+}
+
+.formSection>p {
+    color: #64748b;
+    margin-bottom: 20px;
+}
+
+.reviewForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.reviewForm label {
+    color: #172b4d;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+.reviewForm select,
+.reviewForm textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font: inherit;
+}
+
+.reviewForm textarea {
+    resize: vertical;
+}
+
+.reviewForm button {
+    margin-top: 10px;
+    padding: 12px 18px;
+    border: 1px solid #172b4d;
+    border-radius: 8px;
+    background: #172b4d;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.reviewForm button:hover {
+    background: #243f68;
+}
+
+.reviewForm button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.error {
+    margin-top: 12px;
+    color: #b91c1c;
+}
+
+.success {
+    margin-top: 12px;
+    color: #15803d;
+}
