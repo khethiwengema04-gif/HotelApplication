@@ -9,6 +9,7 @@ import favouriteRoutes from "./routes/favouritesRoutes";
 import bookingRoutes from "./routes/bookingRoutes";
 import roomRoutes from "./routes/roomRoutes"
 import reviewRoutes from "./routes/reviewRoutes"
+import paymentRoutes from './routes/paymentsRoutes'
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use("/api/favourites", favouriteRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/rooms", roomRoutes);
 app.use("/api/reviews", reviewRoutes);
+app.use('/api/payments', paymentRoutes);
 
 
 
