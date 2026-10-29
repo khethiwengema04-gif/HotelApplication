@@ -1,0 +1,93 @@
+.reviewSection {
+    width: 100%;
+    max-width: 900px;
+    margin: 32px auto;
+    padding: 24px;
+    box-sizing: border-box;
+    color: #172b46;
+}
+
+.reviewSection h2 {
+    margin-bottom: 20px;
+    font-size: 1.7rem;
+}
+
+.ratingSummary {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+    padding: 18px;
+    background: #f4f6f9;
+    border-radius: 10px;
+}
+
+.averageRating {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.totalReviews {
+    color: #596579;
+}
+
+.reviewList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.reviewCard {
+    padding: 20px;
+    border: 1px solid #dce2ea;
+    border-radius: 10px;
+    background: #ffffff;
+}
+
+.reviewHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.reviewHeader h3 {
+    margin: 0;
+    font-size: 1.05rem;
+}
+
+.reviewDate {
+    color: #697586;
+    font-size: 0.85rem;
+}
+
+.stars {
+    margin: 12px 0;
+    color: #e4a11b;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+}
+
+.emptyStars {
+    color: #cbd2dc;
+}
+
+.comment {
+    margin-bottom: 0;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.message {
+    padding: 16px 0;
+    color: #596579;
+}
+
+.error {
+    padding: 12px;
+    color: #a32020;
+    background: #fff0f0;
+    border-radius: 8px;
+}
