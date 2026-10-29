@@ -193,9 +193,23 @@ const Admin = () => {
                         <p>Welcome back, Administrator!</p>
                     </div>
 
-                    <div className={styles.adminProfile}>
-                        <div className={styles.avatar}>A</div>
-                        <span>Administrator</span>
+                    <div
+                        className={styles.adminProfile}
+                        onClick={() => {
+                            window.location.href = '/admin/profile';
+                        }}
+                        role="button"
+                        tabIndex={0}
+                    >
+                        <div className={styles.avatar}>
+                            {JSON.parse(localStorage.getItem('user') || '{}').name
+                                ?.charAt(0).toUpperCase() || 'A'}
+                        </div>
+
+                        <span>
+                            {JSON.parse(localStorage.getItem('user') || '{}').name
+                                || 'Administrator'}
+                        </span>
                     </div>
                 </header>
 
