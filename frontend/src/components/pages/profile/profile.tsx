@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import styles from './profile.module.css';
+import { Link } from 'react-router-dom';
 
 interface User {
     id: number;
@@ -44,6 +45,7 @@ const Profile = () => {
                     <div className={styles.avatar}>
                         {user.name?.charAt(0).toUpperCase() || '?'}
                     </div>
+
                     <h1>My Profile</h1>
                     <p>Welcome to your NESTOVA account</p>
                 </div>
@@ -61,8 +63,17 @@ const Profile = () => {
 
                     <div className={styles.detailItem}>
                         <span>Account Role</span>
-                        <strong className={styles.role}>{user.role}</strong>
+                        <strong className={styles.role}>
+                            {user.role}
+                        </strong>
                     </div>
+                </div>
+
+                {/* My Bookings link */}
+                <div className={styles.bookingsLink}>
+                    <Link to="/my-bookings">
+                        My Bookings
+                    </Link>
                 </div>
             </div>
         </div>
