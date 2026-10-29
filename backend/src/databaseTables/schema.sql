@@ -114,7 +114,7 @@ CREATE INDEX IF NOT EXISTS idx_reviews_user_id
     ON reviews(user_id);
 
 
-CREATE TABLE payments (
+CREATE TABLE  IF NOT EXISTS payments (
     id SERIAL PRIMARY KEY,
     booking_id INTEGER NOT NULL
         REFERENCES bookings(id)
@@ -134,7 +134,7 @@ CREATE TABLE payments (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_payments_booking_id
+CREATE INDEX  IF NOT EXISTS idx_payments_booking_id
     ON payments(booking_id);
-CREATE INDEX idx_payments_user_id
-    ON payments(user_id);
+-- CREATE INDEX idx_payments_user_id
+--     ON payments(user_id);
