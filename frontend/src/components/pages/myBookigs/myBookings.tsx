@@ -1,6 +1,10 @@
+
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import type { AppDispatch, RootState } from '../../../store'
+import { initialisePaymentThunk } from '../../../features/payment'
 import styles from './myBookings.module.css'
 
 interface Booking {
@@ -27,11 +31,18 @@ interface BookingsResponse {
 
 const MyBookings = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch<AppDispatch>()
+
+    const {
+        loading: paymentLoading,
+        error: paymentError
+    } = useSelector((state: RootState) => state.payment)
 
     const [bookings, setBookings] = useState<Booking[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
     const [cancellingId, setCancellingId] = useState<number | null>(null)
+    const [payingBookingId, setPayingBookingId] = useState<number | null>(null)
     const [message, setMessage] = useState('')
 
     const loadBookings = async () => {
@@ -80,6 +91,39 @@ const MyBookings = () => {
         void loadBookings()
     }, [])
 
+    const handlePayNow = async (bookingId: number) => {
+        setError('')
+        setMessage('')
+        setPayingBookingId(bookingId)
+
+        try {
+            const result = await dispatch(
+                initialisePaymentThunk(bookingId)
+            )
+
+            if (initialisePaymentThunk.fulfilled.match(result)) {
+                const authorizationUrl = result.payload.authorization_url
+
+                if (authorizationUrl) {
+                    window.location.href = authorizationUrl
+                } else {
+                    setError('Paystack did not return a payment link.')
+                    setPayingBookingId(null)
+                }
+            } else {
+                setError(
+                    typeof result.payload === 'string'
+                        ? result.payload
+                        : 'Could not start your payment. Please try again.'
+                )
+                setPayingBookingId(null)
+            }
+        } catch {
+            setError('An unexpected error occurred while starting payment.')
+            setPayingBookingId(null)
+        }
+    }
+
     const handleCancel = async (bookingId: number) => {
         const confirmed = window.confirm(
             'Are you sure you want to cancel this booking?'
@@ -113,7 +157,6 @@ const MyBookings = () => {
                 response.data.message || 'Booking cancelled successfully.'
             )
 
-            // Refresh the list to show the latest booking status.
             await loadBookings()
         } catch (err: unknown) {
             if (axios.isAxiosError(err)) {
@@ -132,7 +175,6 @@ const MyBookings = () => {
     const formatDate = (date: string) => {
         if (!date) return 'Not provided'
 
-        // Avoid timezone shifts when displaying date-only values.
         const datePart = date.split('T')[0]
         const [year, month, day] = datePart.split('-')
 
@@ -195,6 +237,12 @@ const MyBookings = () => {
                     </div>
                 )}
 
+                {paymentError && !error && (
+                    <div className={styles.errorMessage} role="alert">
+                        {paymentError}
+                    </div>
+                )}
+
                 {message && (
                     <div className={styles.successMessage} role="status">
                         {message}
@@ -224,6 +272,10 @@ const MyBookings = () => {
                                 booking.status === 'Pending' ||
                                 booking.status === 'Confirmed'
 
+                            const canPay =
+                                booking.status === 'Pending' ||
+                                booking.status === 'Confirmed'
+
                             return (
                                 <article
                                     className={styles.bookingCard}
@@ -245,9 +297,7 @@ const MyBookings = () => {
                                         </div>
 
                                         <span
-                                            className={`${styles.status} ${styles[
-                                                `status${booking.status}`
-                                                ]
+                                            className={`${styles.status} ${styles[`status${booking.status}`]
                                                 }`}
                                         >
                                             {booking.status}
@@ -315,26 +365,48 @@ const MyBookings = () => {
                                     <div className={styles.cardFooter}>
                                         <span className={styles.footerNote}>
                                             {canCancel
-                                                ? 'Need to change your plans?'
+                                                ? 'Manage your reservation below.'
                                                 : `This booking is ${booking.status.toLowerCase()}.`}
                                         </span>
 
-                                        {canCancel && (
-                                            <button
-                                                type="button"
-                                                className={styles.cancelButton}
-                                                disabled={
-                                                    cancellingId === booking.id
-                                                }
-                                                onClick={() =>
-                                                    void handleCancel(booking.id)
-                                                }
-                                            >
-                                                {cancellingId === booking.id
-                                                    ? 'Cancelling...'
-                                                    : 'Cancel booking'}
-                                            </button>
-                                        )}
+                                        <div className={styles.actionButtons}>
+                                            {canPay && (
+                                                <button
+                                                    type="button"
+                                                    className={styles.primaryButton}
+                                                    disabled={
+                                                        paymentLoading ||
+                                                        payingBookingId !== null ||
+                                                        cancellingId === booking.id
+                                                    }
+                                                    onClick={() =>
+                                                        void handlePayNow(booking.id)
+                                                    }
+                                                >
+                                                    {payingBookingId === booking.id
+                                                        ? 'Redirecting to Paystack...'
+                                                        : 'Pay Now'}
+                                                </button>
+                                            )}
+
+                                            {canCancel && (
+                                                <button
+                                                    type="button"
+                                                    className={styles.cancelButton}
+                                                    disabled={
+                                                        cancellingId === booking.id ||
+                                                        payingBookingId !== null
+                                                    }
+                                                    onClick={() =>
+                                                        void handleCancel(booking.id)
+                                                    }
+                                                >
+                                                    {cancellingId === booking.id
+                                                        ? 'Cancelling...'
+                                                        : 'Cancel booking'}
+                                                </button>
+                                            )}
+                                        </div>
                                     </div>
                                 </article>
                             )
