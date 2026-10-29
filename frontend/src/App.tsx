@@ -10,6 +10,8 @@ import HotelDetails from './components/pages/hotelDetails/hotelDetails'
 import Booking from './components/pages/booking/booking'
 import MyBookings from './components/pages/myBookigs/myBookings'
 import AdminReservations from './components/pages/admin/adminReservations'
+import PaymentCallback from './components/pages/paymentCallback/PaymentCallback'
+import Profile from './components/pages/profile/profile'
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
       <Route path="/my-bookings" element={<MyBookings />} />
       <Route path="/hotels/:id/book/:roomId" element={<Booking />} />
       <Route path="/admin/reservations" element={<AdminReservations />} />
+      <Route path="/payment/callback" element={<PaymentCallback />} />
+      <Route path="/profile" element={<Profile />} />
     </Routes>
   )
 }
