@@ -1,0 +1,116 @@
+.homePage {
+    min-height: 100vh;
+    background: #f7f8fc;
+}
+
+/* Main page content */
+.homeContent {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 24px 60px;
+}
+
+/* Welcome banner */
+.welcome {
+    padding: 44px 36px;
+    border-radius: 18px;
+    background: #172b4d;
+    color: #ffffff;
+    margin-bottom: 40px;
+    overflow: hidden;
+}
+
+.eyebrow {
+    margin: 0 0 10px;
+    color: #d6bd83;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+/* Main heading */
+.welcome h1 {
+    margin: 0 0 14px;
+    color: #ffffff;
+    font-size: clamp(30px, 4vw, 44px);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+/* Welcome description */
+.welcome>p:not(.eyebrow) {
+    max-width: 600px;
+    line-height: 1.7;
+    color: #e5eaf2;
+}
+
+/* Search bar area */
+.welcome input {
+    background: #ffffff;
+    color: #172b4d;
+    border: 1px solid #d6bd83;
+}
+
+.welcome input::placeholder {
+    color: #64748b;
+}
+
+/* Hotel listings */
+.hotelsSection {
+    margin-top: 30px;
+}
+
+.sectionHeading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.sectionHeading h2 {
+    margin: 0;
+    color: #172b4d;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.sectionHeading span {
+    color: #64748b;
+    white-space: nowrap;
+}
+
+/* Loading and empty messages */
+.message {
+    padding: 24px 0;
+    color: #64748b;
+}
+
+/* Error message */
+.error {
+    padding: 16px;
+    border-radius: 8px;
+    background: #fff1f2;
+    color: #b91c1c;
+}
+
+/* Mobile layout */
+@media (max-width: 600px) {
+    .homeContent {
+        padding: 22px 16px 40px;
+    }
+
+    .welcome {
+        padding: 30px 22px;
+        border-radius: 14px;
+    }
+
+    .welcome h1 {
+        font-size: 30px;
+    }
+
+    .sectionHeading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

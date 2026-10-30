@@ -1,0 +1,394 @@
+.page {
+    min-height: 100vh;
+    padding: 35px 24px 60px;
+    background: #f4f6fa;
+    color: #17243b;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+    max-width: 1120px;
+    margin: 0 auto;
+}
+
+.backButton {
+    border: none;
+    background: transparent;
+    color: #253b60;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 8px 0;
+    margin-bottom: 22px;
+}
+
+.backButton:hover {
+    color: #0b1733;
+}
+
+.pageHeader {
+    margin-bottom: 30px;
+}
+
+.eyebrow {
+    color: #9a7b43;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin: 0 0 10px;
+}
+
+.pageHeader h1 {
+    color: #142544;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(32px, 5vw, 44px);
+    margin: 0 0 10px;
+}
+
+.pageHeader>p:last-child {
+    color: #6c7789;
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.bookingLayout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.85fr);
+    gap: 25px;
+    align-items: start;
+}
+
+.formCard,
+.summaryCard,
+.errorCard,
+.loadingCard {
+    background: #ffffff;
+    border: 1px solid #e4e8ef;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(23, 36, 59, 0.05);
+}
+
+.formCard {
+    padding: 30px;
+}
+
+.cardHeading {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 28px;
+}
+
+.headingIcon {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: #edf1f8;
+    color: #1c345c;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.cardHeading h2,
+.summaryTop h2 {
+    color: #182a49;
+    font-size: 21px;
+    margin: 0 0 6px;
+}
+
+.cardHeading p {
+    color: #7a8493;
+    font-size: 13px;
+    margin: 0;
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 18px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    min-width: 0;
+}
+
+.field>span {
+    color: #263752;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.field input,
+.field select,
+.field textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #dce2eb;
+    border-radius: 9px;
+    padding: 13px 12px;
+    background: #fbfcfe;
+    color: #17243b;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+    border-color: #243e68;
+    box-shadow: 0 0 0 3px rgba(36, 62, 104, 0.1);
+}
+
+.field textarea {
+    resize: vertical;
+    min-height: 110px;
+}
+
+.field small {
+    color: #8992a1;
+    font-size: 11px;
+}
+
+.fullWidth {
+    grid-column: 1 / -1;
+}
+
+.primaryButton {
+    display: block;
+    width: 100%;
+    margin-top: 28px;
+    border: 1px solid #172c50;
+    border-radius: 9px;
+    padding: 15px 20px;
+    background: #172c50;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.primaryButton:hover:not(:disabled) {
+    background: #243f6b;
+    transform: translateY(-1px);
+}
+
+.primaryButton:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.formNote {
+    margin: 14px 0 0;
+    color: #8a93a1;
+    font-size: 11px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.summaryCard {
+    padding: 25px;
+}
+
+.summaryTop {
+    margin-bottom: 22px;
+}
+
+.roomIllustration {
+    display: grid;
+    place-items: center;
+    height: 130px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #e8edf5, #f6f7fa);
+    color: #253e65;
+}
+
+.roomIllustration span {
+    font-family: Georgia, serif;
+    font-size: 62px;
+}
+
+.summaryCard>h3 {
+    margin: 0 0 8px;
+    color: #192d4c;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 23px;
+}
+
+.roomDescription {
+    color: #7a8493;
+    font-size: 13px;
+    line-height: 1.7;
+    margin: 0 0 20px;
+}
+
+.roomFeature {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin: 13px 0;
+    color: #46546b;
+    font-size: 13px;
+}
+
+.roomFeature span:first-child {
+    color: #a0814b;
+    font-size: 17px;
+}
+
+.priceDivider {
+    height: 1px;
+    background: #e7eaf0;
+    margin: 22px 0;
+}
+
+.priceRow,
+.totalRow {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    margin: 16px 0;
+    font-size: 12px;
+}
+
+.priceRow span {
+    color: #778194;
+}
+
+.priceRow strong {
+    color: #263752;
+    font-size: 13px;
+}
+
+.totalRow {
+    border-top: 1px solid #e7eaf0;
+    padding-top: 20px;
+    margin-bottom: 0;
+}
+
+.totalRow span {
+    color: #1b2e4c;
+    font-weight: 700;
+}
+
+.totalRow strong {
+    color: #172c50;
+    font-size: 21px;
+}
+
+.summaryNote {
+    margin: 20px 0 0;
+    padding: 12px;
+    border-radius: 8px;
+    background: #f5f7fa;
+    color: #778194;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.errorMessage {
+    margin: 0 0 20px;
+    padding: 13px 15px;
+    border: 1px solid #f0caca;
+    border-radius: 8px;
+    background: #fff4f4;
+    color: #a32626;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.successMessage {
+    margin-bottom: 22px;
+    padding: 18px;
+    border: 1px solid #c8e7d3;
+    border-radius: 10px;
+    background: #f0faf3;
+    color: #205c37;
+}
+
+.successMessage h3 {
+    margin: 0 0 8px;
+}
+
+.successMessage p {
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.secondaryButton {
+    border: 1px solid #cbd4e1;
+    border-radius: 8px;
+    padding: 11px 16px;
+    background: #ffffff;
+    color: #233b60;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.secondaryButton:hover {
+    background: #f0f3f8;
+}
+
+.errorCard,
+.loadingCard {
+    max-width: 560px;
+    margin: 70px auto;
+    padding: 32px;
+    text-align: center;
+}
+
+.errorCard h2 {
+    color: #172c50;
+}
+
+.errorCard p {
+    color: #8d3030;
+    line-height: 1.6;
+}
+
+@media (max-width: 800px) {
+    .bookingLayout {
+        grid-template-columns: 1fr;
+    }
+
+    .summaryCard {
+        order: -1;
+    }
+}
+
+@media (max-width: 520px) {
+    .page {
+        padding: 20px 14px 40px;
+    }
+
+    .formCard,
+    .summaryCard {
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .formGrid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .fullWidth {
+        grid-column: auto;
+    }
+
+    .pageHeader h1 {
+        font-size: 33px;
+    }
+}

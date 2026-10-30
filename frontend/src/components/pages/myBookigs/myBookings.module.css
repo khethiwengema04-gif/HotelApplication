@@ -1,0 +1,357 @@
+.page {
+    min-height: 100vh;
+    padding: 36px 20px 60px;
+    background: #f5f7fb;
+    color: #17243b;
+}
+
+.container {
+    width: 100%;
+    max-width: 1050px;
+    margin: 0 auto;
+}
+
+.backButton {
+    margin-bottom: 28px;
+    padding: 10px 0;
+    border: none;
+    background: transparent;
+    color: #142747;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.backButton:hover {
+    color: #496b9b;
+}
+
+.header {
+    margin-bottom: 30px;
+}
+
+.eyebrow {
+    margin: 0 0 8px;
+    color: #687b98;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.header h1 {
+    margin: 0 0 10px;
+    color: #142747;
+    font-size: clamp(30px, 4vw, 40px);
+}
+
+.header>p:last-child {
+    margin: 0;
+    color: #68758a;
+    line-height: 1.6;
+}
+
+.bookingList {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.bookingCard {
+    overflow: hidden;
+    border: 1px solid #e0e6ef;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 6px 22px rgba(20, 39, 71, 0.05);
+}
+
+.cardHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 24px;
+    border-bottom: 1px solid #edf0f5;
+}
+
+.bookingNumber {
+    margin: 0 0 8px;
+    color: #7c8ba2;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+}
+
+.cardHeader h2 {
+    margin: 0 0 6px;
+    color: #142747;
+    font-size: 22px;
+}
+
+.location {
+    margin: 0;
+    color: #738096;
+    font-size: 14px;
+}
+
+.status {
+    flex-shrink: 0;
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.statusPending {
+    background: #fff4d8;
+    color: #8a5a00;
+}
+
+.statusConfirmed {
+    background: #e1f6e9;
+    color: #17683a;
+}
+
+.statusRejected {
+    background: #fde8e8;
+    color: #a62c2c;
+}
+
+.statusCancelled {
+    background: #edf0f5;
+    color: #596579;
+}
+
+.statusCompleted {
+    background: #e4edff;
+    color: #244d91;
+}
+
+.roomInfo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px 24px;
+}
+
+.roomIcon {
+    display: flex;
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #edf2fa;
+    color: #142747;
+    font-size: 25px;
+}
+
+.roomInfo h3 {
+    margin: 0 0 5px;
+    color: #243651;
+    font-size: 16px;
+}
+
+.roomInfo p {
+    margin: 0;
+    color: #738096;
+    font-size: 13px;
+}
+
+.detailsGrid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin: 0 24px;
+    padding: 22px 0;
+    border-top: 1px solid #edf0f5;
+    border-bottom: 1px solid #edf0f5;
+}
+
+.detailItem {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.detailItem span {
+    color: #7c8ba2;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.7px;
+}
+
+.detailItem strong {
+    overflow-wrap: anywhere;
+    color: #263751;
+    font-size: 14px;
+}
+
+.totalPrice {
+    color: #142747 !important;
+    font-size: 16px !important;
+}
+
+.requests {
+    padding: 18px 24px 0;
+}
+
+.requests strong {
+    font-size: 13px;
+}
+
+.requests p {
+    margin: 6px 0 0;
+    color: #68758a;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.cardFooter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 24px;
+}
+
+.footerNote {
+    color: #77849a;
+    font-size: 13px;
+}
+
+.cancelButton {
+    padding: 10px 16px;
+    border: 1px solid #c9d2e0;
+    border-radius: 8px;
+    background: #fff;
+    color: #243651;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.cancelButton:hover:not(:disabled) {
+    border-color: #142747;
+    background: #f0f3f8;
+}
+
+.cancelButton:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.primaryButton {
+    padding: 12px 20px;
+    border: 1px solid #142747;
+    border-radius: 8px;
+    background: #142747;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.primaryButton:hover {
+    background: #233e66;
+}
+
+.emptyState,
+.stateCard {
+    padding: 48px 24px;
+    border: 1px solid #e0e6ef;
+    border-radius: 16px;
+    background: #fff;
+    text-align: center;
+}
+
+.emptyIcon {
+    display: flex;
+    width: 64px;
+    height: 64px;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    background: #edf2fa;
+    color: #142747;
+    font-size: 32px;
+}
+
+.emptyState h2 {
+    margin: 0 0 10px;
+    color: #142747;
+}
+
+.emptyState p {
+    max-width: 430px;
+    margin: 0 auto 24px;
+    color: #738096;
+    line-height: 1.6;
+}
+
+.errorMessage,
+.successMessage {
+    margin-bottom: 20px;
+    padding: 14px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.errorMessage {
+    border: 1px solid #f0c7c7;
+    background: #fff0f0;
+    color: #9e2525;
+}
+
+.successMessage {
+    border: 1px solid #b9e4c7;
+    background: #effaf2;
+    color: #17683a;
+}
+
+@media (max-width: 760px) {
+    .detailsGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .cardHeader {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .page {
+        padding: 22px 12px 40px;
+    }
+
+    .cardHeader,
+    .roomInfo,
+    .cardFooter {
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+
+    .detailsGrid {
+        margin-right: 16px;
+        margin-left: 16px;
+    }
+
+    .cardFooter {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .cancelButton {
+        width: 100%;
+    }
+}
+
+.actionButtons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+}

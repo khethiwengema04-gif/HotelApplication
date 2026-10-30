@@ -1,0 +1,140 @@
+.hotel-card {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    min-height: 210px;
+    background: #ffffff;
+    border: 1.5px solid #172c46;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(23, 44, 70, 0.10);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hotel-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(23, 44, 70, 0.16);
+}
+
+/* Hotel image */
+.hotel-image {
+    width: 230px;
+    min-width: 230px;
+    height: 210px;
+    object-fit: cover;
+    display: block;
+}
+
+/* Hotel information */
+.hotel-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 15px 18px;
+    flex: 1;
+    min-width: 0;
+    color: #475569;
+}
+
+.hotel-details>span:first-child {
+    color: #172c46;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.hotel-details>span {
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* Google Maps */
+.hotel-map {
+    width: 100%;
+    max-width: 300px;
+    overflow: hidden;
+    border-radius: 7px;
+    border: 1px solid #172c46;
+}
+
+.hotel-map iframe {
+    display: block;
+    width: 100%;
+    height: 90px;
+    border: 0;
+}
+
+/* Hotel buttons */
+.hotel-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 8px;
+}
+
+.hotel-button {
+    padding: 8px 13px;
+    border: 1px solid #172c46;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #172c46;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.hotel-button:hover {
+    background: #294c70;
+    border-color: #294c70;
+    color: #ffffff;
+}
+
+.view-button {
+    background: #172c46;
+    color: #ffffff;
+}
+
+.favourite-button,
+.share-button {
+    background: #ffffff;
+    color: #172c46;
+}
+
+.favourite-active {
+    background: #172c46;
+    color: #ffffff;
+    border-color: #172c46;
+}
+
+/* Keyboard accessibility */
+.hotel-button:focus-visible {
+    outline: 2px solid #e4a84b;
+    outline-offset: 3px;
+}
+
+/* Responsive design */
+@media (max-width: 650px) {
+    .hotel-card {
+        flex-direction: column;
+    }
+
+    .hotel-image {
+        width: 100%;
+        min-width: 100%;
+        height: 190px;
+    }
+
+    .hotel-details {
+        padding: 14px;
+    }
+
+    .hotel-map {
+        max-width: 100%;
+    }
+
+    .hotel-actions {
+        gap: 6px;
+    }
+}

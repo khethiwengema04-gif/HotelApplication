@@ -1,0 +1,235 @@
+.page {
+    padding: 32px;
+    background: #f6f7fb;
+    min-height: 100vh;
+    color: #172033;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.header h1 {
+    margin: 0 0 8px;
+    color: #172554;
+}
+
+.header p {
+    margin: 0;
+    color: #64748b;
+}
+
+.formCard {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 32px;
+}
+
+.formCard h2,
+.listSection h2 {
+    margin-top: 0;
+    color: #172554;
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.formGrid label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.formGrid input,
+.formGrid textarea,
+.formGrid select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 11px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font: inherit;
+    font-weight: 400;
+    color: #172033;
+    background: #fff;
+}
+
+.formGrid input:focus,
+.formGrid textarea:focus,
+.formGrid select:focus {
+    outline: 2px solid #1e3a8a;
+    outline-offset: 1px;
+}
+
+.formGrid small {
+    color: #64748b;
+    font-weight: 400;
+}
+
+.fullWidth {
+    grid-column: 1 / -1;
+}
+
+.formActions,
+.cardActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.primaryButton,
+.secondaryButton,
+.deleteButton {
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid #172554;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.primaryButton {
+    background: #172554;
+    color: #fff;
+}
+
+.primaryButton:hover {
+    background: #243b75;
+}
+
+.primaryButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.secondaryButton {
+    background: #fff;
+    color: #172554;
+}
+
+.secondaryButton:hover {
+    background: #eff3ff;
+}
+
+.deleteButton {
+    background: #fff;
+    color: #b42318;
+    border-color: #b42318;
+}
+
+.deleteButton:hover {
+    background: #fff1f0;
+}
+
+.error,
+.success {
+    padding: 12px 14px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.error {
+    color: #b42318;
+    background: #fff1f0;
+}
+
+.success {
+    color: #166534;
+    background: #f0fdf4;
+}
+
+.listSection {
+    margin-top: 24px;
+}
+
+.hotelGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 22px;
+}
+
+.hotelCard {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    overflow: hidden;
+    min-width: 0;
+}
+
+.hotelImage,
+.imagePlaceholder {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    display: block;
+}
+
+.imagePlaceholder {
+    display: grid;
+    place-items: center;
+    background: #e2e8f0;
+    color: #64748b;
+}
+
+.hotelDetails {
+    padding: 18px;
+}
+
+.hotelTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.hotelTitle h3 {
+    margin: 0;
+    color: #172554;
+}
+
+.hotelTitle span {
+    color: #a16207;
+    white-space: nowrap;
+}
+
+.hotelDetails>p {
+    color: #64748b;
+}
+
+.description {
+    min-height: 42px;
+}
+
+.cardActions {
+    margin-top: 18px;
+}
+
+@media (max-width: 650px) {
+    .page {
+        padding: 16px;
+    }
+
+    .header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .formGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .fullWidth {
+        grid-column: auto;
+    }
+}
