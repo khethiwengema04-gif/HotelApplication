@@ -1,5 +1,4 @@
-
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './adminProfile.module.css'
 import { Link, useNavigate } from 'react-router-dom';
 
