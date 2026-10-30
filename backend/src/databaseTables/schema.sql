@@ -138,3 +138,22 @@ CREATE INDEX  IF NOT EXISTS idx_payments_booking_id
     ON payments(booking_id);
 -- CREATE INDEX idx_payments_user_id
 --     ON payments(user_id);
+
+
+
+CREATE TABLE IF NOT EXISTS notifications (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    title VARCHAR(150) NOT NULL,
+    message TEXT NOT NULL,
+    type VARCHAR(50) NOT NULL DEFAULT 'general',
+    is_read BOOLEAN NOT NULL DEFAULT FALSE,
+    booking_id INTEGER REFERENCES bookings(id) ON DELETE SET NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_notifications_user_created
+ON notifications (user_id, created_at DESC);
+
+CREATE INDEX IF NOT EXISTS idx_notifications_user_unread
+ON notifications (user_id, is_read);
