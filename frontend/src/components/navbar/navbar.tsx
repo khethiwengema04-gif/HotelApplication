@@ -1,4 +1,4 @@
-import styles from './Navbar.module.css'
+import styles from './navbar.module.css'
 import { Text } from '../text/text'
 import profile from '../../assets/profileIcon.webp'
 import { useNavigate } from 'react-router-dom'

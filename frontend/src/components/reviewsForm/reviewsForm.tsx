@@ -6,7 +6,7 @@ import {
     clearReviewMessage,
     fetchReviews
 } from '../../features/reviews'
-import styles from './ReviewsForm.module.css'
+import styles from './reviewsForm.module.css'
 
 interface ReviewFormProps {
     hotelId: number

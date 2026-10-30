@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import type { AppDispatch, RootState } from '../../store'
 import { fetchReviews } from '../../features/reviews'
-import styles from './ReviewsList.module.css'
+import styles from './reviewsList.module.css'
 
 interface ReviewListProps {
     hotelId: number
