@@ -1,21 +1,21 @@
 
-import React from 'react'
-import styles from './cards.module.css'
-import { Text } from '../text/text'
+import React from 'react';
+import styles from './cards.module.css';
+import { Text } from '../text/text';
 
 export type HotelCardProps = {
-    name: string
-    description: string
-    location: string
-    imglink: string
-    price: number
-    rating: number
-    id: number
-    isFavourite?: boolean
-    viewHotel: (id: number) => void
-    addToFavourites: (id: number) => void
-    shareHotel: (id: number) => void
-}
+    name: string;
+    description: string;
+    location: string;
+    imglink: string;
+    price: number;
+    rating: number;
+    id: number;
+    isFavourite?: boolean;
+    viewHotel: (id: number) => void;
+    addToFavourites: (id: number) => void;
+    shareHotel: (id: number) => void;
+};
 
 export const HotelCard: React.FC<HotelCardProps> = ({
     name,
@@ -30,6 +30,8 @@ export const HotelCard: React.FC<HotelCardProps> = ({
     addToFavourites,
     shareHotel
 }) => {
+    const mapLocation = encodeURIComponent(`${name}, ${location}`);
+
     return (
         <div className={styles['hotel-card']}>
 
@@ -61,6 +63,20 @@ export const HotelCard: React.FC<HotelCardProps> = ({
                     R{price.toLocaleString('en-ZA')} per night
                 </Text>
 
+                {/* Google Map */}
+                <div className={styles['hotel-map']}>
+                    <iframe
+                        title={`Map showing ${name}`}
+                        src={`https://www.google.com/maps?q=${mapLocation}&output=embed`}
+                        width="100%"
+                        height="180"
+                        style={{ border: 0 }}
+                        loading="lazy"
+                        allowFullScreen
+                        referrerPolicy="no-referrer-when-downgrade"
+                    />
+                </div>
+
                 <div className={styles['hotel-actions']}>
 
                     <button
@@ -74,8 +90,7 @@ export const HotelCard: React.FC<HotelCardProps> = ({
                     <button
                         type="button"
                         aria-pressed={isFavourite}
-                        className={`${styles['hotel-button']} ${styles['favourite-button']} ${isFavourite ? styles['favourite-active'] : ''
-                            }`}
+                        className={`${styles['hotel-button']} ${styles['favourite-button']} ${isFavourite ? styles['favourite-active'] : ''}`}
                         onClick={() => addToFavourites(id)}
                     >
                         {isFavourite
@@ -94,7 +109,7 @@ export const HotelCard: React.FC<HotelCardProps> = ({
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default HotelCard
+export default HotelCard;

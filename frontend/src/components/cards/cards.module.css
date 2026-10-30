@@ -1,24 +1,26 @@
 .hotel-card {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    width: 100%;
+    min-height: 210px;
     background: #ffffff;
-    border: 2px solid #172c46;
-    border-radius: 14px;
+    border: 1.5px solid #172c46;
+    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(23, 44, 70, 0.10);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    height: 100%;
+    box-shadow: 0 3px 10px rgba(23, 44, 70, 0.10);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .hotel-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 24px rgba(23, 44, 70, 0.18);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(23, 44, 70, 0.16);
 }
 
 /* Hotel image */
 .hotel-image {
-    width: 100%;
-    height: 220px;
+    width: 230px;
+    min-width: 230px;
+    height: 210px;
     object-fit: cover;
     display: block;
 }
@@ -27,112 +29,112 @@
 .hotel-details {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    padding: 20px;
+    gap: 8px;
+    padding: 15px 18px;
     flex: 1;
-    color: #334155;
+    min-width: 0;
+    color: #475569;
 }
 
-/* Hotel name */
 .hotel-details>span:first-child {
     color: #172c46;
-    font-size: 20px;
+    font-size: 19px;
     font-weight: 700;
 }
 
-/* Hotel actions - buttons in one row */
-.hotel-actions {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    gap: 8px;
-    width: 100%;
-    margin-top: auto;
-    padding-top: 16px;
+.hotel-details>span {
+    font-size: 13px;
+    line-height: 1.5;
 }
 
-/* Shared button style */
-.hotel-button {
-    flex: 1;
-    min-width: 0;
-    padding: 11px 5px;
-    border: 1.5px solid #172c46;
+/* Google Maps */
+.hotel-map {
+    width: 100%;
+    max-width: 300px;
+    overflow: hidden;
     border-radius: 7px;
-    background-color: #172c46;
-    color: #ffffff;
+    border: 1px solid #172c46;
+}
+
+.hotel-map iframe {
+    display: block;
+    width: 100%;
+    height: 90px;
+    border: 0;
+}
+
+/* Hotel buttons */
+.hotel-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 8px;
+}
+
+.hotel-button {
+    padding: 8px 13px;
+    border: 1px solid #172c46;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #172c46;
     font-family: inherit;
     font-size: 12px;
     font-weight: 600;
-    text-align: center;
     cursor: pointer;
-    transition: background-color 0.25s ease,
-        color 0.25s ease,
-        transform 0.2s ease;
+    transition: 0.2s ease;
 }
 
 .hotel-button:hover {
-    background-color: #294c70;
+    background: #294c70;
     border-color: #294c70;
-    transform: translateY(-2px);
+    color: #ffffff;
 }
 
+.view-button {
+    background: #172c46;
+    color: #ffffff;
+}
+
+.favourite-button,
+.share-button {
+    background: #ffffff;
+    color: #172c46;
+}
+
+.favourite-active {
+    background: #172c46;
+    color: #ffffff;
+    border-color: #172c46;
+}
+
+/* Keyboard accessibility */
 .hotel-button:focus-visible {
     outline: 2px solid #e4a84b;
     outline-offset: 3px;
 }
 
-/* View details */
-.view-button {
-    background-color: #172c46;
-    color: #ffffff;
-}
+/* Responsive design */
+@media (max-width: 650px) {
+    .hotel-card {
+        flex-direction: column;
+    }
 
-/* Favourite */
-.favourite-button {
-    background-color: #ffffff;
-    color: #172c46;
-}
-
-.favourite-button:hover {
-    background-color: #172c46;
-    color: #ffffff;
-}
-
-/* Share */
-.share-button {
-    background-color: #ffffff;
-    color: #172c46;
-}
-
-.share-button:hover {
-    background-color: #172c46;
-    color: #ffffff;
-}
-
-/* Responsive styling */
-@media (max-width: 600px) {
     .hotel-image {
+        width: 100%;
+        min-width: 100%;
         height: 190px;
     }
 
     .hotel-details {
-        padding: 15px;
-        gap: 10px;
+        padding: 14px;
+    }
+
+    .hotel-map {
+        max-width: 100%;
     }
 
     .hotel-actions {
-        gap: 5px;
+        gap: 6px;
     }
-
-    .hotel-button {
-        padding: 10px 3px;
-        font-size: 11px;
-    }
-}
-
-
-.favourite-active {
-    background-color: #142b4a;
-    color: #ffffff;
-    border-color: #142b4a;
 }

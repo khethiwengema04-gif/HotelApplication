@@ -3,7 +3,7 @@ export type Hotel = {
     name: string,
     description: string,
     location: string,
-    imglink: string,
+    image_url: string,
     price: number,
     rating: number,
     facilities: string[],

@@ -14,6 +14,8 @@ import PaymentCallback from './components/pages/paymentCallback/PaymentCallback'
 import Profile from './components/pages/profile/profile'
 import AdminProfile from './components/pages/adminProfile/adminProfile'
 import Favourites from './components/pages/favourites/favourites'
+import Notifications from "./components/pages/notifications/notifications";
+
 
 function App() {
   return (
@@ -34,6 +36,7 @@ function App() {
       <Route path="/profile" element={<Profile />} />
       <Route path="/admin/profile" element={<AdminProfile />} />
       <Route path="/favourites" element={<Favourites />} />
+      <Route path="/notifications" element={<Notifications />} />
     </Routes>
   )
 }

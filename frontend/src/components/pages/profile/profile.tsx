@@ -82,6 +82,11 @@ const Profile = () => {
                         My Favourites ♡
                     </Link>
                 </div>
+                <div className={styles.bookingsLink}>
+                    <Link to="/notifications">
+                        Notifications
+                    </Link>
+                </div>
             </div>
         </div>
     );
