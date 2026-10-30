@@ -1,5 +1,5 @@
 import styles from './register.module.css'
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../../store';
 import {
@@ -16,9 +16,6 @@ const Register = () => {
         (state: RootState) => state.register
     );
     const navigate = useNavigate();
-    const navigateToHome = () => {
-        navigate("/home")
-    }
 
     const dispatch = useDispatch()
     const handleFormSubmit = async (e: React.FormEvent) => {
