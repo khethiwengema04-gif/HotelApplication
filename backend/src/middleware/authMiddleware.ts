@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express"
-import jwt, { JwtPayload } from "jsonwebtoken"
+import jwt from "jsonwebtoken"
 import { findUserByEmail } from "../service/authService"
 import { User } from "../types/userTypes"
 

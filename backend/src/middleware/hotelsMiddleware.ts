@@ -66,6 +66,6 @@ export const uploadImage = multer({
     storage: cloudinaryStorage,
     fileFilter,
     limits: {
-        fileSize: 5 * 1024 * 1024, // 5 MB per image
+        fileSize: 5 * 1024 * 1024,
     },
 });

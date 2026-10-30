@@ -1,4 +1,3 @@
-
 import { query } from "../config/database";
 import {
     Notification,

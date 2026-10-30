@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 import { randomUUID } from 'crypto';
 import { query } from '../config/database';
@@ -187,7 +186,7 @@ export const verifyPayment = async (
     console.log('Database update rows:', updateResult.rows.length);
 
     if (updateResult.rows.length === 0) {
-        // Check whether another request already updated the payment.
+        // Checking whether another request already updated the payment.
         const latestResult = await query(
             `SELECT id, booking_id, payment_reference, status, paid_at
              FROM payments

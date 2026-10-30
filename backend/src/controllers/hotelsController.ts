@@ -7,7 +7,6 @@ import {
     deleteHotelService
 } from "../service/hotelsService";
 
-// CREATE HOTEL (Admin Only)
 
 export const createHotel = async (req: Request, res: Response) => {
     try {
@@ -107,7 +106,7 @@ export const getHotelById = async (req: Request, res: Response) => {
     }
 };
 
-// UPDATE HOTEL (Admin Only)
+
 
 
 export const updateHotel = async (req: Request, res: Response) => {

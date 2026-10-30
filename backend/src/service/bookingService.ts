@@ -94,8 +94,7 @@ export const createBookingService = async (
     }
 
     return withTransaction(async (client) => {
-        // Lock this room type so concurrent booking requests for it
-        // cannot both pass the availability check at the same time.
+
         const roomResult = await client.query(
             `SELECT id, hotel_id, capacity, price_per_night, total_rooms
              FROM room_types

@@ -10,7 +10,7 @@ export const createReviewService = async (
     userId: number,
     data: CreateReviewInput
 ): Promise<Review> => {
-    // Only users with a completed booking at this hotel can review it.
+    // It is only users with a completed booking at this hotel can review it.
     const booking = await query(
         `SELECT 1
          FROM bookings b

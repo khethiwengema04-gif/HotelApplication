@@ -5,10 +5,12 @@ import {
     getHotelById,
     updateHotel,
     deleteHotel
-} from "../controllers/hotelsController"
+} from "../controllers/hotelsController";
 import { protect } from "../middleware/authMiddleware";
-import { isAdmin } from "../middleware/hotelsMiddleware"
+import { isAdmin } from "../middleware/hotelsMiddleware";
 import { uploadImage } from "../middleware/hotelsMiddleware";
+
+
 const router = Router();
 
 router.post("/", protect, isAdmin, createHotel);

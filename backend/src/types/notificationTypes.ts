@@ -1,4 +1,3 @@
-
 export type NotificationType =
     | 'booking_pending'
     | 'booking_confirmed'

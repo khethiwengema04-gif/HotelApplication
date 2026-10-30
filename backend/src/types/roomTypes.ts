@@ -1,13 +1,3 @@
-// export interface rooms {
-//     id: number,
-//     hotel_id: number,
-//     room_type: string,
-//     images: string,
-//     price_per_night: number,
-//     is_available: boolean
-// }
-
-
 export interface RoomType {
     id: number;
     hotel_id: number;
