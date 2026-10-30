@@ -1,16 +1,17 @@
 import { Pool } from 'pg'
 import dotenv from "dotenv"
 import type { PoolClient } from 'pg';
+import dns from "dns";
+import net from "net";
 
 dotenv.config()
 
-const pool = new Pool({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: process.env.DB_DATABASE,
-    password: process.env.DB_PASSWORD,
-    port: parseInt(process.env.DB_PORT || "5432"),
+dns.setDefaultResultOrder("ipv4first");
+net.setDefaultAutoSelectFamilyAttemptTimeout(5000);
 
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    connectionTimeoutMillis: 30000,
 });
 
 export const query = (text: string, params?: any[]) => pool.query(text, params)
