@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import styles from './LogIn.module.css';
+import styles from './login.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { GoogleLogin } from '@react-oauth/google';
