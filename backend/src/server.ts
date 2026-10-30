@@ -10,6 +10,7 @@ import bookingRoutes from "./routes/bookingRoutes";
 import roomRoutes from "./routes/roomRoutes"
 import reviewRoutes from "./routes/reviewRoutes"
 import paymentRoutes from './routes/paymentsRoutes'
+import notificationRoutes from "./routes/notificationRoutes";
 
 dotenv.config();
 
@@ -28,7 +29,7 @@ app.use("/api/bookings", bookingRoutes);
 app.use("/api/rooms", roomRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use('/api/payments', paymentRoutes);
-
+app.use("/api/notifications", notificationRoutes);
 
 
 const startServer = async () => {

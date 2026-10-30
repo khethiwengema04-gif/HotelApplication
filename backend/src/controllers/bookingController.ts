@@ -1,3 +1,4 @@
+
 import { Request, Response } from "express";
 import {
     createBookingService,
@@ -14,6 +15,7 @@ import type {
     UpdateBookingInput,
     BookingStatus
 } from "../types/bookingsTypes";
+import { createNotificationService } from "../service/notificationService";
 
 const validId = (
     value: string | string[] | undefined
@@ -26,10 +28,7 @@ const validId = (
     return Number.isSafeInteger(id) ? id : null;
 };
 
-const bookingErrors: Record<
-    string,
-    { status: number; message: string }
-> = {
+const bookingErrors: Record<string, { status: number; message: string }> = {
     INVALID_BOOKING_DATES: {
         status: 400,
         message: "Check-out must be after check-in, and dates must be valid"
@@ -60,10 +59,7 @@ const bookingErrors: Record<
     }
 };
 
-const handleBookingError = (
-    error: unknown,
-    res: Response
-) => {
+const handleBookingError = (error: unknown, res: Response) => {
     const message = error instanceof Error ? error.message : "";
     const knownError = bookingErrors[message];
 
@@ -98,24 +94,15 @@ const validDateString = (value: unknown): value is string => {
     );
 };
 
-export const createBooking = async (
-    req: Request,
-    res: Response
-) => {
+export const createBooking = async (req: Request, res: Response) => {
     try {
         if (!req.user) {
-            return res.status(401).json({
-                message: "Authentication required"
-            });
+            return res.status(401).json({ message: "Authentication required" });
         }
 
         const {
-            room_type_id,
-            check_in,
-            check_out,
-            rooms_booked,
-            guest_count,
-            special_requests
+            room_type_id, check_in, check_out,
+            rooms_booked, guest_count, special_requests
         } = req.body;
 
         if (
@@ -124,11 +111,9 @@ export const createBooking = async (
             !validDateString(check_out) ||
             !isPositiveInteger(rooms_booked) ||
             !isPositiveInteger(guest_count) ||
-            (
-                special_requests !== undefined &&
+            (special_requests !== undefined &&
                 special_requests !== null &&
-                typeof special_requests !== "string"
-            )
+                typeof special_requests !== "string")
         ) {
             return res.status(400).json({
                 message: "Please provide valid room, date, guest, and request details"
@@ -136,15 +121,19 @@ export const createBooking = async (
         }
 
         const data: CreateBookingInput = {
-            room_type_id,
-            check_in,
-            check_out,
-            rooms_booked,
-            guest_count,
-            special_requests
+            room_type_id, check_in, check_out,
+            rooms_booked, guest_count, special_requests
         };
 
         const booking = await createBookingService(req.user.id, data);
+
+        await createNotificationService({
+            user_id: req.user.id,
+            title: "Booking Received",
+            message: "Your booking has been received and is awaiting confirmation.",
+            type: "booking_pending",
+            booking_id: booking.id
+        });
 
         return res.status(201).json({
             message: "Booking created successfully",
@@ -155,63 +144,44 @@ export const createBooking = async (
     }
 };
 
-export const getAllBookings = async (
-    req: Request,
-    res: Response
-) => {
+export const getAllBookings = async (req: Request, res: Response) => {
     try {
         const bookings = await findAllBookingsService();
-
         return res.status(200).json({ bookings });
     } catch (error) {
         return handleBookingError(error, res);
     }
 };
 
-export const getMyBookings = async (
-    req: Request,
-    res: Response
-) => {
+export const getMyBookings = async (req: Request, res: Response) => {
     try {
         if (!req.user) {
-            return res.status(401).json({
-                message: "Authentication required"
-            });
+            return res.status(401).json({ message: "Authentication required" });
         }
 
         const bookings = await findBookingsByUserService(req.user.id);
-
         return res.status(200).json({ bookings });
     } catch (error) {
         return handleBookingError(error, res);
     }
 };
 
-export const getBookingById = async (
-    req: Request,
-    res: Response
-) => {
+export const getBookingById = async (req: Request, res: Response) => {
     try {
         if (!req.user) {
-            return res.status(401).json({
-                message: "Authentication required"
-            });
+            return res.status(401).json({ message: "Authentication required" });
         }
 
         const id = validId(req.params.id);
 
         if (id === null) {
-            return res.status(400).json({
-                message: "Invalid booking ID"
-            });
+            return res.status(400).json({ message: "Invalid booking ID" });
         }
 
         const booking = await findBookingByIdService(id);
 
         if (!booking) {
-            return res.status(404).json({
-                message: "Booking not found"
-            });
+            return res.status(404).json({ message: "Booking not found" });
         }
 
         if (
@@ -229,26 +199,17 @@ export const getBookingById = async (
     }
 };
 
-export const updateBooking = async (
-    req: Request,
-    res: Response
-) => {
+export const updateBooking = async (req: Request, res: Response) => {
     try {
         const id = validId(req.params.id);
 
         if (id === null) {
-            return res.status(400).json({
-                message: "Invalid booking ID"
-            });
+            return res.status(400).json({ message: "Invalid booking ID" });
         }
 
         const allowedFields = [
-            "room_type_id",
-            "check_in",
-            "check_out",
-            "rooms_booked",
-            "guest_count",
-            "special_requests"
+            "room_type_id", "check_in", "check_out",
+            "rooms_booked", "guest_count", "special_requests"
         ];
 
         const suppliedFields = Object.keys(req.body);
@@ -264,49 +225,24 @@ export const updateBooking = async (
 
         const data = req.body as UpdateBookingInput;
 
-        if (
-            data.room_type_id !== undefined &&
-            !isPositiveInteger(data.room_type_id)
-        ) {
-            return res.status(400).json({
-                message: "room_type_id must be a positive integer"
-            });
+        if (data.room_type_id !== undefined && !isPositiveInteger(data.room_type_id)) {
+            return res.status(400).json({ message: "room_type_id must be a positive integer" });
         }
 
-        if (
-            data.rooms_booked !== undefined &&
-            !isPositiveInteger(data.rooms_booked)
-        ) {
-            return res.status(400).json({
-                message: "rooms_booked must be a positive integer"
-            });
+        if (data.rooms_booked !== undefined && !isPositiveInteger(data.rooms_booked)) {
+            return res.status(400).json({ message: "rooms_booked must be a positive integer" });
         }
 
-        if (
-            data.guest_count !== undefined &&
-            !isPositiveInteger(data.guest_count)
-        ) {
-            return res.status(400).json({
-                message: "guest_count must be a positive integer"
-            });
+        if (data.guest_count !== undefined && !isPositiveInteger(data.guest_count)) {
+            return res.status(400).json({ message: "guest_count must be a positive integer" });
         }
 
-        if (
-            data.check_in !== undefined &&
-            !validDateString(data.check_in)
-        ) {
-            return res.status(400).json({
-                message: "check_in must be a valid YYYY-MM-DD date"
-            });
+        if (data.check_in !== undefined && !validDateString(data.check_in)) {
+            return res.status(400).json({ message: "check_in must be a valid YYYY-MM-DD date" });
         }
 
-        if (
-            data.check_out !== undefined &&
-            !validDateString(data.check_out)
-        ) {
-            return res.status(400).json({
-                message: "check_out must be a valid YYYY-MM-DD date"
-            });
+        if (data.check_out !== undefined && !validDateString(data.check_out)) {
+            return res.status(400).json({ message: "check_out must be a valid YYYY-MM-DD date" });
         }
 
         if (
@@ -314,18 +250,21 @@ export const updateBooking = async (
             data.special_requests !== null &&
             typeof data.special_requests !== "string"
         ) {
-            return res.status(400).json({
-                message: "special_requests must be a string or null"
-            });
+            return res.status(400).json({ message: "special_requests must be a string or null" });
         }
 
         const booking = await updateBookingService(id, data);
 
         if (!booking) {
-            return res.status(404).json({
-                message: "Booking not found"
-            });
+            return res.status(404).json({ message: "Booking not found" });
         }
+
+        await createNotificationService({
+            user_id: Number(booking.user_id),
+            title: "Booking Updated",
+            message: "Your booking details have been successfully updated.",
+            booking_id: booking.id
+        });
 
         return res.status(200).json({
             message: "Booking updated successfully",
@@ -336,47 +275,55 @@ export const updateBooking = async (
     }
 };
 
-export const updateBookingStatus = async (
-    req: Request,
-    res: Response
-) => {
+export const updateBookingStatus = async (req: Request, res: Response) => {
     try {
         const id = validId(req.params.id);
         const { status } = req.body;
 
         const allowedStatuses: BookingStatus[] = [
-            "Pending",
-            "Confirmed",
-            "Rejected",
-            "Cancelled",
-            "Completed"
+            "Pending", "Confirmed", "Rejected", "Cancelled", "Completed"
         ];
 
         if (id === null) {
-            return res.status(400).json({
-                message: "Invalid booking ID"
-            });
+            return res.status(400).json({ message: "Invalid booking ID" });
         }
 
         if (
             typeof status !== "string" ||
             !allowedStatuses.includes(status as BookingStatus)
         ) {
-            return res.status(400).json({
-                message: "Invalid booking status"
-            });
+            return res.status(400).json({ message: "Invalid booking status" });
         }
 
-        const booking = await updateBookingStatusService(
-            id,
-            status as BookingStatus
-        );
+        const booking = await updateBookingStatusService(id, status as BookingStatus);
 
         if (!booking) {
-            return res.status(404).json({
-                message: "Booking not found"
-            });
+            return res.status(404).json({ message: "Booking not found" });
         }
+
+        const messages: Record<BookingStatus, string> = {
+            Pending: "Your booking is now pending.",
+            Confirmed: "Great news! Your booking has been confirmed.",
+            Rejected: "Unfortunately, your booking has been rejected.",
+            Cancelled: "Your booking has been cancelled.",
+            Completed: "Your booking has been marked as completed."
+        };
+
+        const types: Record<BookingStatus, "booking_pending" | "booking_confirmed" | "booking_rejected" | "booking_cancelled" | "booking_completed"> = {
+            Pending: "booking_pending",
+            Confirmed: "booking_confirmed",
+            Rejected: "booking_rejected",
+            Cancelled: "booking_cancelled",
+            Completed: "booking_completed"
+        };
+
+        await createNotificationService({
+            user_id: Number(booking.user_id),
+            title: "Booking Status Updated",
+            message: messages[status as BookingStatus],
+            type: types[status as BookingStatus],
+            booking_id: booking.id
+        });
 
         return res.status(200).json({
             message: "Booking status updated successfully",
@@ -387,23 +334,16 @@ export const updateBookingStatus = async (
     }
 };
 
-export const cancelMyBooking = async (
-    req: Request,
-    res: Response
-) => {
+export const cancelMyBooking = async (req: Request, res: Response) => {
     try {
         if (!req.user) {
-            return res.status(401).json({
-                message: "Authentication required"
-            });
+            return res.status(401).json({ message: "Authentication required" });
         }
 
         const id = validId(req.params.id);
 
         if (id === null) {
-            return res.status(400).json({
-                message: "Invalid booking ID"
-            });
+            return res.status(400).json({ message: "Invalid booking ID" });
         }
 
         const booking = await cancelBookingService(id, req.user.id);
@@ -414,6 +354,14 @@ export const cancelMyBooking = async (
             });
         }
 
+        await createNotificationService({
+            user_id: req.user.id,
+            title: "Booking Cancelled",
+            message: "Your booking has been successfully cancelled.",
+            type: "booking_cancelled",
+            booking_id: booking.id
+        });
+
         return res.status(200).json({
             message: "Booking cancelled successfully",
             booking
@@ -423,30 +371,21 @@ export const cancelMyBooking = async (
     }
 };
 
-export const deleteBooking = async (
-    req: Request,
-    res: Response
-) => {
+export const deleteBooking = async (req: Request, res: Response) => {
     try {
         const id = validId(req.params.id);
 
         if (id === null) {
-            return res.status(400).json({
-                message: "Invalid booking ID"
-            });
+            return res.status(400).json({ message: "Invalid booking ID" });
         }
 
         const booking = await deleteBookingService(id);
 
         if (!booking) {
-            return res.status(404).json({
-                message: "Booking not found"
-            });
+            return res.status(404).json({ message: "Booking not found" });
         }
 
-        return res.status(200).json({
-            message: "Booking deleted successfully"
-        });
+        return res.status(200).json({ message: "Booking deleted successfully" });
     } catch (error) {
         return handleBookingError(error, res);
     }
