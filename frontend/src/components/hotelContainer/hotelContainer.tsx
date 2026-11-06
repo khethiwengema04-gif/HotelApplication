@@ -20,14 +20,15 @@ export const HotelContainer: React.FC<HotelContainerProps> = ({
 }) => {
     return (
         <div id={styles['hotel-container']}>
+
             {hotels && hotels.length > 0 && hotels.map(hotel => (
                 <HotelCard
                     key={hotel.id}
                     name={hotel.name}
                     description={hotel.description}
-                    price={hotel.price}
-                    imglink={hotel.image_url}
-                    rating={hotel.rating}
+                    price={Number(hotel.price)}
+                    imglink={hotel.images?.[0] || ''}
+                    rating={hotel.star_rating}
                     id={hotel.id}
                     location={hotel.location}
                     isFavourite={favouriteHotelIds.includes(hotel.id)}
@@ -36,6 +37,7 @@ export const HotelContainer: React.FC<HotelContainerProps> = ({
                     shareHotel={shareHotel}
                 />
             ))}
+
         </div>
     )
 }
