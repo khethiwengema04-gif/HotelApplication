@@ -5,6 +5,8 @@ import hotelReducer from './features/hotels'
 import paymentReducer from './features/payment'
 import reviewsReducer from './features/reviews'
 import profileReducer from './features/profile'
+import bookingsReducer from './features/bookings'
+import roomsReducer from './features/rooms'
 
 export const store = configureStore({
     reducer: {
@@ -13,7 +15,9 @@ export const store = configureStore({
         hotels: hotelReducer,
         payment: paymentReducer,
         reviews: reviewsReducer,
-        profile: profileReducer
+        profile: profileReducer,
+        bookings: bookingsReducer,
+        rooms: roomsReducer
     },
 })
 

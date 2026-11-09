@@ -1,6 +1,10 @@
+
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import axios from 'axios'
+import type { AppDispatch } from '../../../store'
+import { createBooking } from '../../../features/bookings'
 import styles from './booking.module.css'
 
 interface Room {
@@ -16,6 +20,7 @@ interface Room {
 const Booking = () => {
     const { id, roomId } = useParams()
     const navigate = useNavigate()
+    const dispatch = useDispatch<AppDispatch>()
 
     const [room, setRoom] = useState<Room | null>(null)
     const [checkIn, setCheckIn] = useState('')
@@ -109,30 +114,25 @@ const Booking = () => {
         setSaving(true)
 
         try {
-            await axios.post(
-                '/api/bookings',
-                {
+            await dispatch(
+                createBooking({
                     room_type_id: room.id,
                     check_in: checkIn,
                     check_out: checkOut,
                     rooms_booked: numberOfRooms,
                     guest_count: numberOfGuests,
                     special_requests: specialRequests.trim() || undefined,
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}`,
-                    },
-                }
-            )
+                })
+            ).unwrap()
 
             setMessage('Your booking was submitted successfully!')
+
         } catch (err: unknown) {
-            if (axios.isAxiosError(err)) {
-                setError(err.response?.data?.message || 'Booking failed. Please try again.')
-            } else {
-                setError('Booking failed. Please try again.')
-            }
+            setError(
+                typeof err === 'string'
+                    ? err
+                    : 'Booking failed. Please try again.'
+            )
         } finally {
             setSaving(false)
         }

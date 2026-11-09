@@ -7,6 +7,25 @@ import {
     deleteHotelService
 } from "../service/hotelsService";
 
+const getImageUrls = (value: unknown): string[] => {
+    if (Array.isArray(value)) {
+        return value
+            .filter((item): item is string => typeof item === "string")
+            .map(item => item.trim())
+            .filter(Boolean);
+    }
+
+    if (typeof value === "string") {
+        return value
+            .split(",")
+            .map(item => item.trim())
+            .filter(Boolean);
+    }
+
+    return [];
+};
+
+// CREATE HOTEL (Admin Only)
 
 export const createHotel = async (req: Request, res: Response) => {
     try {
@@ -30,7 +49,10 @@ export const createHotel = async (req: Request, res: Response) => {
         const uploadedFiles = (req.files || []) as
             (Express.Multer.File & { path: string })[];
 
-        const images = uploadedFiles.map(file => file.path);
+        const images = uploadedFiles.length > 0
+            ? uploadedFiles.map(file => file.path)
+            : getImageUrls(req.body.images);
+
 
         // Convert facilities from form-data text into an array
         const facilitiesArray: string[] = Array.isArray(facilities)
@@ -140,10 +162,11 @@ export const updateHotel = async (req: Request, res: Response) => {
         const uploadedFiles = (req.files || []) as
             (Express.Multer.File & { path: string })[];
 
-        // Preserve existing images if no new files are uploaded
         const images = uploadedFiles.length > 0
             ? uploadedFiles.map(file => file.path)
-            : hotelExists.images;
+            : req.body.images !== undefined
+                ? getImageUrls(req.body.images)
+                : hotelExists.images;
 
         const facilitiesArray: string[] = Array.isArray(facilities)
             ? facilities

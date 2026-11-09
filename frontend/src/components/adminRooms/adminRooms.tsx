@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import type { AppDispatch, RootState } from '../../store'
+import { fetchHotels } from '../../features/hotels'
+import {
+    fetchRooms,
+    createRoom,
+    updateRoom,
+    deleteRoom,
+} from '../../features/rooms'
 import styles from './adminRooms.module.css'
 
 interface Hotel {
@@ -34,78 +42,60 @@ const emptyForm: RoomForm = {
 }
 
 const AdminRooms = () => {
-    const [hotels, setHotels] = useState<Hotel[]>([])
-    const [rooms, setRooms] = useState<Room[]>([])
+    const dispatch = useDispatch<AppDispatch>()
+
+    // Redux state
+    const hotels = useSelector(
+        (state: RootState) => state.hotels.hotels
+    ) as Hotel[]
+
+    const rooms = useSelector(
+        (state: RootState) => state.rooms.rooms
+    ) as Room[]
+
+    const loading = useSelector(
+        (state: RootState) => state.rooms.isLoading
+    )
+
+    const saving = useSelector(
+        (state: RootState) => state.rooms.isSaving
+    )
+
+    const roomsError = useSelector(
+        (state: RootState) => state.rooms.error
+    )
+
+    const hotelsError = useSelector(
+        (state: RootState) => state.hotels.error
+    )
+
+    // Local form state
     const [hotelId, setHotelId] = useState('')
     const [form, setForm] = useState<RoomForm>(emptyForm)
     const [editingId, setEditingId] = useState<number | null>(null)
-    const [loading, setLoading] = useState(false)
-    const [saving, setSaving] = useState(false)
     const [error, setError] = useState('')
     const [message, setMessage] = useState('')
 
     const token = () => localStorage.getItem('token')
 
-    const getErrorMessage = (err: unknown) => {
-        if (axios.isAxiosError(err)) {
-            return err.response?.data?.message || 'Request failed. Please try again.'
-        }
-        return 'An unexpected error occurred.'
-    }
-
-    const loadHotels = async () => {
-        try {
-            const response = await axios.get('/api/hotels')
-            const data: Hotel[] = Array.isArray(response.data)
-                ? response.data
-                : response.data.hotels ?? []
-
-            setHotels(data)
-
-            if (data.length > 0) {
-                setHotelId(current =>
-                    current || String(data[0].id)
-                )
-            }
-        } catch (err: unknown) {
-            setError(getErrorMessage(err))
-        }
-    }
-
-    const loadRooms = async (selectedHotelId: string) => {
-        if (!selectedHotelId) {
-            setRooms([])
-            return
-        }
-
-        setLoading(true)
-        setError('')
-
-        try {
-            const response = await axios.get(
-                `/api/rooms/hotels/${selectedHotelId}/rooms`
-            )
-
-            const data: Room[] = Array.isArray(response.data)
-                ? response.data
-                : response.data.rooms ?? []
-
-            setRooms(data)
-        } catch (err: unknown) {
-            setError(getErrorMessage(err))
-            setRooms([])
-        } finally {
-            setLoading(false)
-        }
-    }
-
+    // Fetch hotels from Redux
     useEffect(() => {
-        void loadHotels()
-    }, [])
+        void dispatch(fetchHotels())
+    }, [dispatch])
 
+    // Select the first hotel automatically
     useEffect(() => {
-        void loadRooms(hotelId)
-    }, [hotelId])
+        if (hotels.length > 0 && !hotelId) {
+            setHotelId(String(hotels[0].id))
+        }
+    }, [hotels, hotelId])
+
+    // Fetch rooms whenever the selected hotel changes
+    useEffect(() => {
+        if (hotelId) {
+            void dispatch(fetchRooms(hotelId))
+        }
+    }, [hotelId, dispatch])
 
     const handleChange = (
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -145,7 +135,9 @@ const AdminRooms = () => {
             !Number.isInteger(totalRooms) ||
             totalRooms < 1
         ) {
-            setError('Enter a room name, valid capacity, positive price, and number of rooms.')
+            setError(
+                'Enter a room name, valid capacity, positive price, and number of rooms.'
+            )
             return
         }
 
@@ -157,42 +149,44 @@ const AdminRooms = () => {
             total_rooms: totalRooms,
         }
 
-        setSaving(true)
-
         try {
-            const config = {
-                headers: {
-                    Authorization: `Bearer ${token()}`,
-                },
-            }
-
             if (editingId === null) {
-                await axios.post(
-                    `/api/rooms/hotels/${hotelId}/rooms`,
-                    roomData,
-                    config
-                )
+                await dispatch(
+                    createRoom({
+                        hotelId,
+                        roomData,
+                    })
+                ).unwrap()
+
                 setMessage('Room added successfully.')
             } else {
-                await axios.put(
-                    `/api/rooms/${editingId}`,
-                    roomData,
-                    config
-                )
+                await dispatch(
+                    updateRoom({
+                        roomId: editingId,
+                        roomData,
+                    })
+                ).unwrap()
+
                 setMessage('Room updated successfully.')
             }
 
             resetForm()
-            await loadRooms(hotelId)
+
+            // Refresh the room list
+            await dispatch(fetchRooms(hotelId)).unwrap()
+
         } catch (err: unknown) {
-            setError(getErrorMessage(err))
-        } finally {
-            setSaving(false)
+            setError(
+                typeof err === 'string'
+                    ? err
+                    : 'Request failed. Please try again.'
+            )
         }
     }
 
     const handleEdit = (room: Room) => {
         setEditingId(room.id)
+
         setForm({
             name: room.name,
             description: room.description ?? '',
@@ -200,6 +194,7 @@ const AdminRooms = () => {
             price_per_night: String(room.price_per_night),
             total_rooms: String(room.total_rooms),
         })
+
         setError('')
         setMessage('')
     }
@@ -218,18 +213,20 @@ const AdminRooms = () => {
         setMessage('')
 
         try {
-            await axios.delete(`/api/rooms/${room.id}`, {
-                headers: {
-                    Authorization: `Bearer ${token()}`,
-                },
-            })
+            await dispatch(deleteRoom(room.id)).unwrap()
 
-            if (editingId === room.id) resetForm()
+            if (editingId === room.id) {
+                resetForm()
+            }
 
             setMessage('Room deleted successfully.')
-            await loadRooms(hotelId)
+
         } catch (err: unknown) {
-            setError(getErrorMessage(err))
+            setError(
+                typeof err === 'string'
+                    ? err
+                    : 'Failed to delete room. Please try again.'
+            )
         }
     }
 
@@ -242,15 +239,22 @@ const AdminRooms = () => {
                 </div>
             </header>
 
-            {error && (
-                <p className={styles.error} role="alert">{error}</p>
+            {(error || roomsError || hotelsError) && (
+                <p className={styles.error} role="alert">
+                    {error || roomsError || hotelsError}
+                </p>
             )}
+
             {message && (
-                <p className={styles.success} role="status">{message}</p>
+                <p className={styles.success} role="status">
+                    {message}
+                </p>
             )}
 
             <section className={styles.formCard}>
-                <h2>{editingId === null ? 'Add Room Type' : 'Edit Room Type'}</h2>
+                <h2>
+                    {editingId === null ? 'Add Room Type' : 'Edit Room Type'}
+                </h2>
 
                 <form onSubmit={handleSubmit}>
                     <div className={styles.formGrid}>
@@ -261,12 +265,18 @@ const AdminRooms = () => {
                                 onChange={event => {
                                     setHotelId(event.target.value)
                                     resetForm()
+                                    setError('')
+                                    setMessage('')
                                 }}
                                 required
                             >
                                 <option value="">Choose a hotel</option>
+
                                 {hotels.map(hotel => (
-                                    <option key={hotel.id} value={hotel.id}>
+                                    <option
+                                        key={hotel.id}
+                                        value={hotel.id}
+                                    >
                                         {hotel.name}
                                     </option>
                                 ))}
@@ -377,9 +387,20 @@ const AdminRooms = () => {
                             >
                                 <div className={styles.hotelDetails}>
                                     <h3>{room.name}</h3>
-                                    <p>{room.description || 'No description provided.'}</p>
-                                    <p>Capacity: {room.capacity} guests</p>
-                                    <p>Available room inventory: {room.total_rooms}</p>
+
+                                    <p>
+                                        {room.description ||
+                                            'No description provided.'}
+                                    </p>
+
+                                    <p>
+                                        Capacity: {room.capacity} guests
+                                    </p>
+
+                                    <p>
+                                        Available room inventory: {room.total_rooms}
+                                    </p>
+
                                     <strong>
                                         R{Number(room.price_per_night).toFixed(2)} / night
                                     </strong>
