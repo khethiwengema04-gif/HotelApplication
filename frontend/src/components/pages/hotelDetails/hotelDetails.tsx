@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
@@ -121,17 +122,31 @@ const HotelDetails = () => {
                 ← Back to hotels
             </button>
 
+            {/* Hotel information and image gallery */}
             <section className={styles.hotelHeader}>
-                {images[0] && (
-                    <img
-                        className={styles.hotelImage}
-                        src={images[0]}
-                        alt={hotel.name}
-                    />
-                )}
 
+                {/* Hotel image gallery */}
+                <div className={styles.imageGallery}>
+                    {images.length > 0 ? (
+                        images.slice(0, 5).map((image, index) => (
+                            <img
+                                key={index}
+                                className={styles.hotelImage}
+                                src={image}
+                                alt={`${hotel.name} - Image ${index + 1}`}
+                            />
+                        ))
+                    ) : (
+                        <div className={styles.noImage}>
+                            No hotel images available
+                        </div>
+                    )}
+                </div>
+
+                {/* Hotel information */}
                 <div className={styles.hotelInfo}>
                     <p className={styles.eyebrow}>DISCOVER NESTOVA</p>
+
                     <h1>{hotel.name}</h1>
 
                     <p className={styles.location}>
@@ -166,6 +181,7 @@ const HotelDetails = () => {
                     )}
                 </div>
             </section>
+
 
             <section className={styles.roomsSection}>
                 <div className={styles.sectionHeading}>
@@ -231,7 +247,7 @@ const HotelDetails = () => {
                 )}
             </section>
 
-            {/* Guest reviews */}
+
             <section className={styles.roomsSection}>
                 <ReviewList hotelId={hotel.id} />
                 <ReviewForm hotelId={hotel.id} />

@@ -19,7 +19,7 @@
 
 .hotelHeader {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
     gap: 35px;
     padding: 28px;
     border: 1px solid #e1e6ef;
@@ -28,14 +28,40 @@
     box-shadow: 0 5px 20px rgba(20, 39, 70, 0.04);
 }
 
+/* Hotel image gallery */
+.imageGallery {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    grid-auto-rows: 175px;
+    gap: 10px;
+    align-content: start;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
 .hotelImage {
     width: 100%;
-    height: 360px;
+    height: 100%;
+    min-height: 0;
     object-fit: cover;
-    border-radius: 12px;
+    border-radius: 9px;
     background: #edf1f7;
 }
 
+.hotelImage:first-child {
+    grid-row: span 2;
+}
+
+.noImage {
+    display: grid;
+    place-items: center;
+    min-height: 360px;
+    border-radius: 12px;
+    background: #edf1f7;
+    color: #68758a;
+}
+
+/* Hotel information */
 .hotelInfo h1 {
     margin: 8px 0 12px;
     color: #172f53;
@@ -76,6 +102,7 @@
     font-size: 15px;
 }
 
+/* Room section */
 .roomsSection {
     margin-top: 45px;
 }
@@ -203,6 +230,7 @@
     background: white;
 }
 
+/* Responsive design */
 @media (max-width: 900px) {
     .hotelHeader {
         grid-template-columns: 1fr;
@@ -222,8 +250,13 @@
         padding: 16px;
     }
 
-    .hotelImage {
-        height: 230px;
+    .imageGallery {
+        grid-template-columns: 1fr 1fr;
+        grid-auto-rows: 130px;
+    }
+
+    .hotelImage:first-child {
+        grid-row: span 2;
     }
 
     .hotelInfo h1 {

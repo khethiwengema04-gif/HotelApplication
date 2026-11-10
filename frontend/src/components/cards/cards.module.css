@@ -1,8 +1,9 @@
 .hotel-card {
     display: flex;
     flex-direction: row;
+    align-items: stretch;
     width: 100%;
-    min-height: 210px;
+    min-height: 320px;
     background: #ffffff;
     border: 1.5px solid #172c46;
     border-radius: 10px;
@@ -16,21 +17,26 @@
     box-shadow: 0 6px 16px rgba(23, 44, 70, 0.16);
 }
 
-/* Hotel image */
+
 .hotel-image {
-    width: 230px;
-    min-width: 230px;
-    height: 210px;
+    width: 34%;
+    min-width: 280px;
+    max-width: 360px;
+    height: auto;
+    min-height: 100%;
     object-fit: cover;
+    object-position: center;
     display: block;
+    flex-shrink: 0;
 }
 
-/* Hotel information */
+
 .hotel-details {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    padding: 15px 18px;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 20px 22px;
     flex: 1;
     min-width: 0;
     color: #475569;
@@ -38,19 +44,19 @@
 
 .hotel-details>span:first-child {
     color: #172c46;
-    font-size: 19px;
+    font-size: 20px;
     font-weight: 700;
 }
 
 .hotel-details>span {
     font-size: 13px;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
-/* Google Maps */
+
 .hotel-map {
     width: 100%;
-    max-width: 300px;
+    max-width: 310px;
     overflow: hidden;
     border-radius: 7px;
     border: 1px solid #172c46;
@@ -59,21 +65,20 @@
 .hotel-map iframe {
     display: block;
     width: 100%;
-    height: 90px;
+    height: 95px;
     border: 0;
 }
 
-/* Hotel buttons */
 .hotel-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 9px;
     margin-top: auto;
-    padding-top: 8px;
+    padding-top: 10px;
 }
 
 .hotel-button {
-    padding: 8px 13px;
+    padding: 9px 14px;
     border: 1px solid #172c46;
     border-radius: 6px;
     background: #ffffff;
@@ -108,26 +113,41 @@
     border-color: #172c46;
 }
 
-/* Keyboard accessibility */
+
 .hotel-button:focus-visible {
     outline: 2px solid #e4a84b;
     outline-offset: 3px;
 }
 
-/* Responsive design */
+
+@media (max-width: 850px) {
+    .hotel-image {
+        width: 32%;
+        min-width: 220px;
+    }
+
+    .hotel-details {
+        padding: 16px;
+    }
+}
+
 @media (max-width: 650px) {
     .hotel-card {
         flex-direction: column;
+        min-height: auto;
     }
 
     .hotel-image {
         width: 100%;
         min-width: 100%;
-        height: 190px;
+        max-width: none;
+        height: 230px;
+        min-height: 230px;
+        object-fit: cover;
     }
 
     .hotel-details {
-        padding: 14px;
+        padding: 16px;
     }
 
     .hotel-map {
@@ -135,6 +155,6 @@
     }
 
     .hotel-actions {
-        gap: 6px;
+        gap: 7px;
     }
 }

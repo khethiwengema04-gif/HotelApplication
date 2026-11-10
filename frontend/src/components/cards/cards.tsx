@@ -1,3 +1,4 @@
+
 import React from 'react';
 import styles from './cards.module.css';
 import { Text } from '../text/text';
@@ -34,6 +35,7 @@ export const HotelCard: React.FC<HotelCardProps> = ({
     return (
         <div className={styles['hotel-card']}>
 
+
             <img
                 className={styles['hotel-image']}
                 src={imglink}
@@ -54,15 +56,7 @@ export const HotelCard: React.FC<HotelCardProps> = ({
                     {description}
                 </Text>
 
-                <Text varient="span" style={{ fontWeight: 600 }}>
-                    ⭐ {rating} / 5
-                </Text>
 
-                <Text varient="span" style={{ fontWeight: 600 }}>
-                    R{price.toLocaleString('en-ZA')} per night
-                </Text>
-
-                {/* Google Map */}
                 <div className={styles['hotel-map']}>
                     <iframe
                         title={`Map showing ${name}`}
@@ -75,6 +69,16 @@ export const HotelCard: React.FC<HotelCardProps> = ({
                         referrerPolicy="no-referrer-when-downgrade"
                     />
                 </div>
+
+
+                <Text varient="span" style={{ fontWeight: 600 }}>
+                    ⭐ {rating} / 5
+                </Text>
+
+
+                <Text varient="span" style={{ fontWeight: 600 }}>
+                    R{price.toLocaleString('en-ZA')} per night
+                </Text>
 
                 <div className={styles['hotel-actions']}>
 
